@@ -1,0 +1,150 @@
+import { BatchGetItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+
+export class CustomDynamoDB {
+    tableName;
+    primaryKey;
+    sortingKey;
+    DB;
+
+    constructor(tableName: string, primaryKey: string, sortingKey?: string) {
+        this.tableName = tableName;
+        this.primaryKey = primaryKey;
+        this.DB = new DynamoDBClient({
+            endpoint: "http://localhost:4000"
+        });
+        this.sortingKey = sortingKey ?? null;
+    }
+
+    async getItem(primaryKey, secondaryKey?) {
+        const pk: any = marshall({[this.primaryKey]: primaryKey});
+        let sk;
+        if (secondaryKey) {
+            sk = marshall({[this.sortingKey]: secondaryKey})
+        }
+
+        const options = new GetItemCommand({
+            TableName: this.tableName,
+            Key: {
+                ...pk,
+                ...sk
+            }
+        })
+
+        const dbRes = await this.DB.send(options);
+        if(!dbRes.Item) {
+            return null;
+        }
+        return unmarshall(dbRes.Item);
+    }
+
+    async getByPrimaryKey(id, identifier, indexName, attributes){
+        const options = new QueryCommand({
+            KeyConditionExpression: `${identifier ?? this.primaryKey} = :id`,
+            ExpressionAttributeValues: {
+                ":id": {
+                    S: id,
+                }
+            },
+            TableName: this.tableName,
+            IndexName: indexName ?? null,
+            Select: attributes ? 'SPECIFIC_ATTRIBUTES' : 'ALL_ATTRIBUTES',
+            ProjectionExpression: attributes ? 
+                attributes.join(',')
+                : null,
+        })
+        const dbRes = await this.DB.send(options);
+        if(!dbRes.Items.length) {
+            return null;
+        }
+        return unmarshall(dbRes.Items[0]);
+    }
+
+    async getByIndex(
+        indexName,
+        pKeyName,
+        pKeyValue,
+        sortKeyName?,
+        sortKeyValue?,
+        sortComparison?){
+        const options = new QueryCommand({
+            KeyConditionExpression: `${pKeyName} = :value`,
+            ExpressionAttributeValues: {
+                ":value": {
+                    S: pKeyValue,
+                }
+            },
+            TableName: this.tableName,
+            IndexName: indexName,
+        })
+
+        const dbRes = await this.DB.send(options);
+        if(!dbRes.Items.length) {
+            return null;
+        }
+        return unmarshall(dbRes.Items[0]);
+    }
+
+    async putItem(item) {
+        const options = new PutItemCommand({
+            TableName: this.tableName,
+            Item: marshall(item),
+        })
+        return this.DB.send(options);
+    }
+
+    async updateItem(pk, item) {
+        let updateExp = '';
+        let expValues: Array<any> = [];
+
+        for (let [k, v] of Object.entries(item)) {
+            updateExp = `${updateExp} ${k} = :${k},`;
+            expValues.push(marshall({ [`:${k}`]: v }));
+            
+        }
+
+        const ExpressionAttributeValues = {};
+
+        for (const obj of expValues) {
+            const keys = Object.keys(obj)
+            ExpressionAttributeValues[keys[0]] = obj[`${keys[0]}`]
+        }
+
+        const options = new UpdateItemCommand({
+            TableName: this.tableName,
+            UpdateExpression: `SET ${updateExp.slice(0, updateExp.length - 1)}`,
+            ExpressionAttributeValues,
+            Key: {
+                [this.primaryKey]: {
+                    S: pk
+                }
+            },
+            ReturnValues: 'NONE'
+        });
+
+        await this.DB.send(options);
+    }
+
+    async batchGetById(idArray) {
+        const options = new BatchGetItemCommand({
+            RequestItems: {
+                [this.tableName]: {
+                    Keys: idArray.map(id => ({[this.primaryKey]: { S: id }}))
+                }
+            }
+        })
+
+        const dbRes = await this.DB.send(options);
+
+        return (dbRes.Responses[this.tableName].map(e => unmarshall(e)));
+
+    } 
+
+    static marshall(item) {
+        return marshall(item);
+    }
+
+    static unmarshall(item) {
+        return unmarshall(item);
+    }
+}

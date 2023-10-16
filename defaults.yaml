@@ -1,0 +1,9 @@
+tags: 
+  - OFGM
+  - Backend
+environment:
+  USERS_TABLE: ${self:provider.stage}-${self:service}-users
+  CLASSES_TABLE: ${self:provider.stage}-${self:service}-classes
+  JWT_SECRET: pX6kDWovpzjkfon
+  PROD_URL: https://0req57xjz5.execute-api.us-east-1.amazonaws.com/prod
+  QA_URL: https://sgct180v33.execute-api.us-east-1.amazonaws.com/qa

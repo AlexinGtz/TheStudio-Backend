@@ -1,0 +1,28 @@
+{
+  "name": "thestudio-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serverless offline start --stage local --region us-east-1 --reloadHandler",
+    "ddb": "set DYNAMO_ENDPOINT=http://localhost:4000 && dynamodb-admin"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "serverless-dynamodb": "^0.2.43",
+    "serverless-offline": "^13.2.0",
+    "serverless-plugin-include-dependencies": "^5.1.0",
+    "serverless-s3-local": "^0.8.1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.428.0",
+    "@aws-sdk/util-dynamodb": "^3.428.0",
+    "@types/jsonwebtoken": "^9.0.3",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "serverless-plugin-typescript": "^2.1.5",
+    "uuid": "^9.0.1"
+  }
+}

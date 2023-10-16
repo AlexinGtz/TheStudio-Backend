@@ -1,0 +1,143 @@
+service: the-studio
+
+plugins: 
+  - serverless-offline
+  - serverless-dynamodb
+  - serverless-s3-local
+  - serverless-plugin-include-dependencies
+  - serverless-plugin-typescript
+
+provider: 
+  name: aws
+  runtime: nodejs18.x
+  region: ${opt:region, "us-east-1"}
+  stage: ${opt:stage, "local"}
+  timeout: 30
+  environment:
+    STAGE: ${self:provider.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: 'arn:aws:dynamodb:us-east-1:*:*'
+        - Effect: Allow
+          Action: 
+            - s3:GetObject
+            - s3:PutObject
+          Resource: '*'
+  apiGateway:
+    restApiId: !Ref MainApi
+    restApiRootResourceId: !GetAtt MainApi.RootResourceId
+    cors: true
+
+resources:
+  - '${file(./aws/resources/cloudfront.yaml)}'
+  - '${file(./aws/resources/dynamodb.yaml)}'
+  - '${file(./aws/resources/s3.yaml)}'
+  - '${file(./aws/resources/apigateway.yaml)}'
+
+custom:
+  defaults: ${file(./defaults.yaml)}
+  tags: ${self:custom.defaults.tags}
+  environment: ${self:custom.defaults.environment}
+  service: ${self:service}
+  base: ${self:service}-${self:provider.stage}
+  dynamodb:
+    stages:
+      - local
+    start: 
+      port: 4000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      tables:
+        sources:
+          - table: ${self:provider.stage}-${self:service}-users
+            sources: [./src/seeds/users.json]
+          - table: ${self:provider.stage}-${self:service}-classes
+            sources: [./src/seeds/classes.json]
+  s3:
+    host: localhost
+    region: us-east-1
+    directory: ./.bucket
+    port: 3005
+
+functions:
+  registerUser:
+      name: ${self:custom.base}-registerUser
+      description: 'Registers a new user'
+      handler: src/handlers/register.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/register.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+      events:
+        - http:
+            path: /register
+            method: post
+            cors: true
+  login:
+      name: ${self:custom.base}-login
+      description: 'Logs a user into the app'
+      handler: src/handlers/login.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/login.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /login
+            method: post
+            cors: true
+  bookClass:
+      name: ${self:custom.base}-bookClass
+      description: 'Allows the user to book a class'
+      handler: src/handlers/bookClass.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/bookClass.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /bookClass
+            method: post
+            cors: true
+  cancelClass:
+      name: ${self:custom.base}-cancelClass
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/cancelClass.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/cancelClass.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /cancelClass
+            method: post
+            cors: true
+  

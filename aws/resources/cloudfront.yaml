@@ -1,0 +1,55 @@
+Resources:
+  MainDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties: 
+        DistributionConfig:
+          DefaultCacheBehavior:
+              CachePolicyId: !Ref MainCachePolicy
+              TargetOriginId: !Ref TheStudioWebPage
+              AllowedMethods: 
+                - GET
+                - POST
+                - OPTIONS
+                - HEAD
+                - DELETE
+                - PUT
+                - PATCH
+              ViewerProtocolPolicy: redirect-to-https
+          HttpVersion: http2
+          IPV6Enabled: true
+          Enabled: true
+          PriceClass: PriceClass_100
+          DefaultRootObject: index.html
+          CustomErrorResponses:
+            - ErrorCachingMinTTL: 36000
+              ErrorCode: 403
+              ResponseCode: 403
+              ResponsePagePath: /index.html
+          Origins:
+            - 
+              S3OriginConfig: 
+                OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${MainOAI}
+              Id: !Ref TheStudioWebPage
+              DomainName: !GetAtt TheStudioWebPage.DomainName
+  MainOAI:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties: 
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: OAI for TheStudioWebPage
+  MainCachePolicy: 
+    Type: AWS::CloudFront::CachePolicy
+    Properties: 
+      CachePolicyConfig: 
+          Comment: Main Cache
+          DefaultTTL: 6000
+          MaxTTL: 10000
+          MinTTL: 2000
+          Name: ${self:provider.stage}-MainCache
+          ParametersInCacheKeyAndForwardedToOrigin: 
+            CookiesConfig: 
+                CookieBehavior: all
+            HeadersConfig: 
+              HeaderBehavior: none
+            QueryStringsConfig: 
+              QueryStringBehavior: all
+            EnableAcceptEncodingGzip: false

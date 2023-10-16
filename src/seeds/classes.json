@@ -1,0 +1,16 @@
+[{
+    "id": "1234",
+    "date": "2023-10-25T00:00:00",
+    "instructor": "Maria",
+    "registeredUsers": [{"id": "1234"}, {"id": "7a30e433-2e29-42ac-8256-ade583876bf7"}],
+    "maxUsers": 6,
+    "canceled": false
+},
+{
+    "id": "2345",
+    "date": "2023-10-11T00:00:00",
+    "instructor": "Maria",
+    "registeredUsers": [{"id": "1234"}],
+    "maxUsers": 6,
+    "canceled": false
+}]

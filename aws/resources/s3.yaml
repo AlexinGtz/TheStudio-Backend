@@ -1,0 +1,17 @@
+Resources:
+  TheStudioWebPage:
+        Type: AWS::S3::Bucket
+        Properties:
+          Tags:
+            - Key: Stage
+              Value: ${self:provider.stage}
+            - Key: Service
+              Value: ${self:service}
+  TheStudioImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      Tags:
+        - Key: Stage
+          Value: ${self:provider.stage}
+        - Key: Service
+          Value: ${self:service}
