@@ -30,20 +30,15 @@ Resources:
         TableName: ${self:provider.stage}-${self:service}-classes
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
-          - AttributeName: "id"
+          - AttributeName: "month"
             AttributeType: "S"
           - AttributeName: "date"
             AttributeType: "S"
         KeySchema: 
-          - AttributeName: "id"
+          - AttributeName: "month"
             KeyType: "HASH"
-        GlobalSecondaryIndexes:
-          - IndexName: date-index
-            KeySchema: 
-              - AttributeName: "date"
-                KeyType: "HASH"
-            Projection: 
-              ProjectionType: ALL
+          - AttributeName: "date"
+            KeyType: "RANGE"
         Tags:
           - Key: Stage
             Value: ${self:provider.stage}

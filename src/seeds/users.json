@@ -7,13 +7,13 @@
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 1,
-        "expireDate": "2023-10-18T00:00:00"
+        "expireDate": "2023-10-28T00:00:00"
     },
     {
         "availableClasses": 1,
         "expireDate": "2023-10-11T00:00:00"
     }],
-    "bookedClasses": ["1234"],
+    "bookedClasses": [{"pk": "10", "sk": "2023-10-25T00:00:00"}, {"pk": "10", "sk": "2023-10-24T00:00:00"}],
     "deleted": false,
     "whatsappNotifications": false
 },
@@ -21,14 +21,14 @@
     "id": "1234",
     "firstName": "Alex",
     "lastName": "Gutierrez",
-    "phoneNumber": "3313393021",
+    "phoneNumber": "3313392031",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 0,
         "expireDate": "2023-10-18T00:00:00"
     }],
-    "bookedClasses": ["1234"],
+    "bookedClasses": [{"pk": "10", "sk": "2023-10-22T00:00:00"}],
     "deleted": false,
     "whatsappNotifications": false
 },

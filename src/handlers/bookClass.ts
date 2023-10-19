@@ -2,7 +2,7 @@ import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken"
 import { HTTP_ERROR_CODES } from "../constants";
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'id');
+const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
 
 export const handler = async (event: any) => {
@@ -49,9 +49,11 @@ export const handler = async (event: any) => {
 
     const body= JSON.parse(event.body);
 
-    const { classId } = body;
+    const { classDate } = body;
 
-    const classInfo = await classesDB.getItem(classId);
+    const classDateObj = new Date(classDate);
+
+    const classInfo = await classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate);
 
     if(!classInfo) {
         //Error
@@ -65,10 +67,16 @@ export const handler = async (event: any) => {
 
     classInfo.registeredUsers.push({id: userInfo!.id});
     selectedPackage.availableClasses = selectedPackage.availableClasses - 1;
+    userInfo.bookedClasses.push({pk: classInfo.month, sk: classInfo.date});
 
     await Promise.all([
-        usersDB.updateItem(userInfo.id,{purchasedPackages: userInfo!.purchasedPackages}),
-        classesDB.updateItem(classInfo.id,{registeredUsers: classInfo!.registeredUsers})
+        usersDB.updateItem(userInfo.id,
+            {
+                purchasedPackages: userInfo!.purchasedPackages,
+                bookedClasses: userInfo.bookedClasses
+            }
+            ),
+        classesDB.updateItem(classInfo.date,{registeredUsers: classInfo!.registeredUsers}, classInfo.month)
     ])
 
     return {

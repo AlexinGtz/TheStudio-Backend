@@ -2,7 +2,7 @@ import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
 import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken";
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'id');
+const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
 
 export const handler = async (event: any) => {
@@ -20,12 +20,13 @@ export const handler = async (event: any) => {
     const body= JSON.parse(event.body);
     const today = new Date();
 
-    const { classId, userId } = body;
+    const { classDate, userId } = body;
 
+    const classDateObj = new Date(classDate);
 
     const [userInfo, classInfo] = await Promise.all([
         usersDB.getItem(tokenData.id),
-        classesDB.getItem(classId)
+        classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate),
     ]);
 
     if(!userInfo || !classInfo) {
@@ -85,10 +86,16 @@ export const handler = async (event: any) => {
         }
 
         classInfo.registeredUsers = classInfo.registeredUsers.filter(e => e.id !== user.id);
+        const newBookedClasses = user.bookedClasses.filter((c) => c.sk !== classInfo.date);
+
+        console.log('booked', newBookedClasses);
 
         await Promise.all([
-            usersDB.updateItem(user.id,{purchasedPackages: user!.purchasedPackages}),
-            classesDB.updateItem(classInfo.id,{registeredUsers: classInfo!.registeredUsers})
+            usersDB.updateItem(user.id,{
+                purchasedPackages: user!.purchasedPackages,
+                bookedClasses: newBookedClasses,
+            }),
+            classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
         ])
 
         return {

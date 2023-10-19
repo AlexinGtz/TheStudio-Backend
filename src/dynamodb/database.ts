@@ -85,6 +85,38 @@ export class CustomDynamoDB {
         return unmarshall(dbRes.Items[0]);
     }
 
+    async query(id, secondaryKeyVal?, sortComparison?, indexName?) {
+        const pkName = `#${this.primaryKey}`
+        const skName = `#${this.sortingKey}`
+
+        let condition = `${pkName} = :pk`
+        if (this.sortingKey) {
+            condition = condition.concat(` AND ${skName} ${sortComparison} :sk`);
+        }
+
+        const options = new QueryCommand({
+            TableName: this.tableName,
+            IndexName: indexName ?? undefined,
+            KeyConditionExpression: condition,
+            ExpressionAttributeValues: {
+                ":pk": {
+                    S: id
+                },
+                ":sk": {
+                    S: secondaryKeyVal
+                }
+            },
+            ExpressionAttributeNames: {
+                [pkName]: this.primaryKey,
+                [skName]: this.sortingKey
+            }
+        })
+
+        const dbRes = await this.DB.send(options)
+
+        return (dbRes.Items.map(e => unmarshall(e)));
+    }
+
     async putItem(item) {
         const options = new PutItemCommand({
             TableName: this.tableName,
@@ -93,7 +125,7 @@ export class CustomDynamoDB {
         return this.DB.send(options);
     }
 
-    async updateItem(pk, item) {
+    async updateItem(pk, item, sk?) {
         let updateExp = '';
         let expValues: Array<any> = [];
 
@@ -110,15 +142,23 @@ export class CustomDynamoDB {
             ExpressionAttributeValues[keys[0]] = obj[`${keys[0]}`]
         }
 
+        let key = {
+            [this.primaryKey]: {
+                S: pk
+            }
+        }
+
+        if(this.sortingKey) {
+            key[this.sortingKey] = {
+                S: sk
+            }
+        }
+
         const options = new UpdateItemCommand({
             TableName: this.tableName,
             UpdateExpression: `SET ${updateExp.slice(0, updateExp.length - 1)}`,
             ExpressionAttributeValues,
-            Key: {
-                [this.primaryKey]: {
-                    S: pk
-                }
-            },
+            Key: key,
             ReturnValues: 'NONE'
         });
 
@@ -129,7 +169,14 @@ export class CustomDynamoDB {
         const options = new BatchGetItemCommand({
             RequestItems: {
                 [this.tableName]: {
-                    Keys: idArray.map(id => ({[this.primaryKey]: { S: id }}))
+                    Keys: idArray.map(el => {
+                        const key = {[this.primaryKey]: { S: el.pk }}
+                        if(this.sortingKey) {
+                            key[this.sortingKey]= { S: el.sk }
+                        }
+
+                        return key;
+                    })
                 }
             }
         })

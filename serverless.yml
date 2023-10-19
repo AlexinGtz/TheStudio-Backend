@@ -140,4 +140,40 @@ functions:
             path: /cancelClass
             method: post
             cors: true
+  getUserBookedClasses:
+      name: ${self:custom.base}-getUserBookedClasses
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getUserBookedClasses.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/getUserBookedClasses.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getUserBookedClasses
+            method: get
+            cors: true
+  getFutureClasses:
+      name: ${self:custom.base}-getFutureClasses
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getFutureClasses.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/getFutureClasses.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getFutureClasses
+            method: get
+            cors: true
   
