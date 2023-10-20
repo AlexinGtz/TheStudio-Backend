@@ -1,6 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
 import { CustomDynamoDB } from '../dynamodb/database';
-import { msInADay } from '../helpers/constants';
+import { msInADay } from '../constants';
 
 const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 

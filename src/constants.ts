@@ -12,3 +12,5 @@ export const USER_TYPES = {
     USER: 'user',
     ADMIN: 'admin'
 }
+
+export const msInADay = 1000 * 60 * 60 * 24;

@@ -1,6 +1,7 @@
 import { hash } from 'bcrypt'
 import { CustomDynamoDB } from '../dynamodb/database';
 import { v4 as uuidv4 } from 'uuid';
+import { USER_TYPES } from '../constants'
 
 const database = new CustomDynamoDB(process.env.USERS_TABLE!, 'id')
 
@@ -22,7 +23,7 @@ export const handler = async (event) => {
         firstName,
         lastName,
         password: encriptedPassword,
-        userType: 'user'
+        userType: USER_TYPES.USER
     });
 
     //Send Whatsapp

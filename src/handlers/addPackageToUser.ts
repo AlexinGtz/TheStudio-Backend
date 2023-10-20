@@ -1,6 +1,6 @@
 import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
 import { CustomDynamoDB } from "../dynamodb/database";
-import { msInADay } from "../helpers/constants";
+import { msInADay } from "../constants";
 import { validateToken } from "../helpers/validateToken";
 
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
