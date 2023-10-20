@@ -1,4 +1,4 @@
-import { BatchGetItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { BatchGetItemCommand, BatchWriteItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 
 export class CustomDynamoDB {
@@ -125,6 +125,16 @@ export class CustomDynamoDB {
         return this.DB.send(options);
     }
 
+    async scan() { 
+        const options = new ScanCommand({
+            TableName: this.tableName,
+        });
+
+        const dbRes = await this.DB.send(options)
+
+        return (dbRes.Items.map(e => unmarshall(e)));
+    }
+
     async updateItem(pk, item, sk?) {
         let updateExp = '';
         let expValues: Array<any> = [];
@@ -186,6 +196,29 @@ export class CustomDynamoDB {
         return (dbRes.Responses[this.tableName].map(e => unmarshall(e)));
 
     } 
+
+    async batchWriteItems(items) {
+        const batchSize = 25;
+        const numberOfCalls = Math.ceil(items.length / batchSize);
+        const callsToDB: any = []
+
+        for(let i = 0; i < numberOfCalls; i++) {
+            const currentItems = items.slice(i * batchSize, (i + 1) * batchSize);
+            const options = new BatchWriteItemCommand({
+                RequestItems: {
+                    [this.tableName]: currentItems.map((it) => ({
+                        PutRequest: {
+                            Item: marshall(it)
+                        }
+                    }))
+                }
+            });
+
+            callsToDB.push(this.DB.send(options))
+        }
+
+        return Promise.all(callsToDB);
+    }
 
     static marshall(item) {
         return marshall(item);

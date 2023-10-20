@@ -64,6 +64,8 @@ custom:
             sources: [./src/seeds/users.json]
           - table: ${self:provider.stage}-${self:service}-classes
             sources: [./src/seeds/classes.json]
+          - table: ${self:provider.stage}-${self:service}-packages
+            sources: [./src/seeds/packages.json]
   s3:
     host: localhost
     region: us-east-1
@@ -158,22 +160,90 @@ functions:
             path: /getUserBookedClasses
             method: get
             cors: true
-  getFutureClasses:
-      name: ${self:custom.base}-getFutureClasses
+  getUpcomingClasses:
+      name: ${self:custom.base}-getUpcomingClasses
       description: 'Allows the user and admin to cancel a class'
-      handler: src/handlers/getFutureClasses.handler
+      handler: src/handlers/getUpcomingClasses.handler
       timeout: 30
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/getFutureClasses.ts'
+          - 'src/handlers/getUpcomingClasses.ts'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
       events:
         - http:
-            path: /getFutureClasses
+            path: /getUpcomingClasses
             method: get
             cors: true
-  
+  createClasses:
+      name: ${self:custom.base}-createClasses
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/createClasses.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/createClasses.ts'
+      environment:
+        CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /createClasses
+            method: post
+            cors: true
+  getProfile:
+      name: ${self:custom.base}-getProfile
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getProfile.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/getProfile.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getProfile
+            method: get
+            cors: true
+  getAllPackages:
+      name: ${self:custom.base}-getAllPackages
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getAllPackages.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/getAllPackages.ts'
+      environment:
+        PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getAllPackages
+            method: get
+            cors: true
+  addPackageToUser:
+      name: ${self:custom.base}-addPackageToUser
+      description: 'Allows the user to book a class'
+      handler: src/handlers/addPackageToUser.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - 'src/handlers/addPackageToUser.ts'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /addPackageToUser
+            method: post
+            cors: true

@@ -1,6 +1,25 @@
 [{
     "id": "1",
     "classQuantity": 1,
-    "expireTime": "7days",
-    "cost": 400
-}]
+    "expireDays": 7,
+    "cost": 260
+},
+{
+    "id": "2",
+    "classQuantity": 4,
+    "expireDays": 10,
+    "cost": 950
+},
+{
+    "id": "3",
+    "classQuantity": 8,
+    "expireDays": 20,
+    "cost": 1500
+},
+{
+    "id": "4",
+    "classQuantity": 20,
+    "expireDays": 30,
+    "cost": 2000
+}
+]
