@@ -4,23 +4,23 @@ import * as jwt from 'jsonwebtoken';
 import { responseHelper } from "../helpers/responseHelper";
 import { HTTP_ERROR_CODES } from "../constants";
 
-const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
+const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event) => {
     const body = JSON.parse(event.body);
 
     const { phoneNumber, password } = body;
 
-    const user = await usersDB.getByIndex('phone-index', 'phoneNumber', phoneNumber);
+    const user = await usersDB.getItem(phoneNumber);
 
     if(!user) {
-        return responseHelper("User not in DB", null, HTTP_ERROR_CODES.NOT_FOUND);
+        return responseHelper("User not in DB", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     const passwordsMatch = await compare(password, user.password);
 
     if(!passwordsMatch) {
-        return responseHelper("Passwords doesn't  match", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Passwords doesn't  match", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const token = jwt.sign(
@@ -35,7 +35,7 @@ export const handler = async (event) => {
         {expiresIn: '24h'}
     )
 
-    return responseHelper('Successfully created profile', {
+    return responseHelper('Successfully logged in', {
         userType: user.userType,
         id: user.id,
         phoneNumber: user.phoneNumber,

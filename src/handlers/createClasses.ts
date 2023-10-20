@@ -73,11 +73,11 @@ const days = {
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(tokenData.userType !== USER_TYPES.DEV) {
-        return responseHelper('User action forbidden', null, HTTP_ERROR_CODES.FORBIDDEN);
+        return responseHelper('User action forbidden', undefined, HTTP_ERROR_CODES.FORBIDDEN);
     }
 
     const body = JSON.parse(event.body);

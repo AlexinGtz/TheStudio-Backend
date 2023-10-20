@@ -4,6 +4,7 @@ export const responseHelper = (message: string, data?: any, errorStatusCode?: nu
     return {
         statusCode,
         body: JSON.stringify({
+            statusCode,
             message,
             data
         })

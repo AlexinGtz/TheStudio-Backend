@@ -31,6 +31,8 @@ export class CustomDynamoDB {
             }
         })
 
+        console.log('options', options);
+
         const dbRes = await this.DB.send(options);
         if(!dbRes.Item) {
             return null;

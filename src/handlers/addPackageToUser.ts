@@ -4,17 +4,17 @@ import { msInADay } from "../constants";
 import { validateToken } from "../helpers/validateToken";
 import { responseHelper } from "../helpers/responseHelper";
 
-const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
+const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 const packagesDB = new CustomDynamoDB(process.env.PACKAGES_TABLE!, 'id');
 
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(tokenData.userType !== USER_TYPES.ADMIN) {
-        return responseHelper("Action forbidden", null, HTTP_ERROR_CODES.FORBIDDEN);
+        return responseHelper("Action forbidden", undefined, HTTP_ERROR_CODES.FORBIDDEN);
     }
 
     const body = JSON.parse(event.body);
@@ -29,7 +29,7 @@ export const handler = async (event: any) => {
     if(!userInfo || !packageInfo) {
         return responseHelper(
             "Data not found for user or package", 
-            null, 
+            undefined, 
             HTTP_ERROR_CODES.NOT_FOUND);
     }
 

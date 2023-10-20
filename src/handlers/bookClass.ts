@@ -4,18 +4,18 @@ import { HTTP_ERROR_CODES } from "../constants";
 import { responseHelper } from "../helpers/responseHelper";
 
 const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
-const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
+const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const userInfo = await usersDB.getItem(tokenData.id);
 
     if(!userInfo) {
-        return responseHelper("Error retrieving user information", null, HTTP_ERROR_CODES.NOT_FOUND);
+        return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     let selectedPackage;
@@ -30,7 +30,7 @@ export const handler = async (event: any) => {
     }
 
     if(!selectedPackage) {
-        return responseHelper("User cannot book a class", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("User cannot book a class", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const body= JSON.parse(event.body);
@@ -42,11 +42,11 @@ export const handler = async (event: any) => {
     const classInfo = await classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate);
 
     if(!classInfo) {
-        return responseHelper("Class information not found", null, HTTP_ERROR_CODES.NOT_FOUND);
+        return responseHelper("Class information not found", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     if(classInfo.canceled || classInfo?.registeredUsers.length === classInfo?.maxUsers) {
-        return responseHelper("User cannot book class", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("User cannot book class", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     classInfo.registeredUsers.push({id: userInfo!.id});

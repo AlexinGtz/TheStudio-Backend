@@ -4,12 +4,12 @@ import { validateToken } from "../helpers/validateToken";
 import { responseHelper } from "../helpers/responseHelper";
 
 const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
-const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
+const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const body= JSON.parse(event.body);
@@ -25,11 +25,11 @@ export const handler = async (event: any) => {
     ]);
 
     if(!userInfo || !classInfo) {
-        return responseHelper("Error retrieving user or class information", null, HTTP_ERROR_CODES.NOT_FOUND);
+        return responseHelper("Error retrieving user or class information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     if(classInfo.canceled) {
-        return responseHelper("Class already canceled", null, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Class already canceled", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if( (userInfo.userType === USER_TYPES.ADMIN && userId)
@@ -39,14 +39,14 @@ export const handler = async (event: any) => {
             await usersDB.getItem(userId) : userInfo; 
         
         if (!user) {
-            return responseHelper("Error retrieving user information", null, HTTP_ERROR_CODES.NOT_FOUND);
+            return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
         }
 
         const regUser = classInfo.registeredUsers.find(e => e.id === user.id);
         if(!regUser) {
             return responseHelper(
                 "Cannot cancel class because the user is not registered", 
-                null, 
+                undefined, 
                 HTTP_ERROR_CODES.BAD_REQUEST);
         }
         

@@ -1,5 +1,4 @@
 [{
-    "id": "7a30e433-2e29-42ac-8256-ade583876bf7",
     "firstName": "Alex",
     "lastName": "Gutierrez",
     "phoneNumber": "3313393021",
@@ -18,7 +17,6 @@
     "whatsappNotifications": false
 },
 {
-    "id": "1234",
     "firstName": "Alex",
     "lastName": "Gutierrez",
     "phoneNumber": "3313392031",
@@ -33,7 +31,6 @@
     "whatsappNotifications": false
 },
 {
-    "id": "7a30e433-2e29-42ac-8256-ade583876bf6",
     "firstName": "Alex",
     "lastName": "Gutierrez",
     "phoneNumber": "3312188843",
