@@ -10,7 +10,8 @@ export const HTTP_ERROR_CODES = {
 
 export const USER_TYPES = {
     USER: 'user',
-    ADMIN: 'admin'
+    ADMIN: 'admin',
+    DEV: 'dev'
 }
 
 export const msInADay = 1000 * 60 * 60 * 24;

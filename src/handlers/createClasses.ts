@@ -1,5 +1,7 @@
 import { CustomDynamoDB } from '../dynamodb/database';
-import { msInADay } from '../constants';
+import { HTTP_ERROR_CODES, USER_TYPES, msInADay } from '../constants';
+import { validateToken } from '../helpers/validateToken';
+import { responseHelper } from '../helpers/responseHelper';
 
 const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 
@@ -69,6 +71,21 @@ const days = {
 }
 
 export const handler = async (event: any) => {
+    const tokenData = await validateToken(event.headers.Authorization);
+    if(!tokenData) {
+        return {
+            statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
+            body: JSON.stringify({
+                message: "User token not valid"
+            })
+        }
+        
+    }
+
+    if(tokenData.userType !== USER_TYPES.DEV) {
+        return responseHelper('User action forbidden', null, true, HTTP_ERROR_CODES.FORBIDDEN);
+    }
+
     const body = JSON.parse(event.body);
 
     const { year, month } = body;
@@ -101,10 +118,5 @@ export const handler = async (event: any) => {
  
     await classesDB.batchWriteItems(itemsToInsert);
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: "Succesfully created classes for the month"
-        })
-    }
+    return responseHelper("Succesfully created classes for the month")
 }
