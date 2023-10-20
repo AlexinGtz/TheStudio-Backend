@@ -1,6 +1,7 @@
 import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
 import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken";
+import { responseHelper } from "../helpers/responseHelper";
 
 const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
@@ -8,13 +9,7 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return {
-            statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
-            body: JSON.stringify({
-                message: "User token not valid"
-            })
-        }
-        
+        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const body= JSON.parse(event.body);
@@ -30,21 +25,11 @@ export const handler = async (event: any) => {
     ]);
 
     if(!userInfo || !classInfo) {
-        return {
-            statusCode: HTTP_ERROR_CODES.NOT_FOUND,
-            body: JSON.stringify({
-                message: "Error retrieving user or class information"
-            })
-        }
+        return responseHelper("Error retrieving user or class information", null, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     if(classInfo.canceled) {
-        return {
-            statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
-            body: JSON.stringify({
-                message: "Class already canceled"
-            })
-        }
+        return responseHelper("Class already canceled", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if( (userInfo.userType === USER_TYPES.ADMIN && userId)
@@ -54,22 +39,15 @@ export const handler = async (event: any) => {
             await usersDB.getItem(userId) : userInfo; 
         
         if (!user) {
-            return {
-                statusCode: HTTP_ERROR_CODES.NOT_FOUND,
-                body: JSON.stringify({
-                    message: "Error retrieving user information"
-                })
-            }
+            return responseHelper("Error retrieving user information", null, HTTP_ERROR_CODES.NOT_FOUND);
         }
 
         const regUser = classInfo.registeredUsers.find(e => e.id === user.id);
         if(!regUser) {
-            return {
-                statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
-                body: JSON.stringify({
-                    message: 'Cannot cancel class because the user is not registered'
-                })
-            }
+            return responseHelper(
+                "Cannot cancel class because the user is not registered", 
+                null, 
+                HTTP_ERROR_CODES.BAD_REQUEST);
         }
         
         const classDate = new Date(classInfo.date);
@@ -88,8 +66,6 @@ export const handler = async (event: any) => {
         classInfo.registeredUsers = classInfo.registeredUsers.filter(e => e.id !== user.id);
         const newBookedClasses = user.bookedClasses.filter((c) => c.sk !== classInfo.date);
 
-        console.log('booked', newBookedClasses);
-
         await Promise.all([
             usersDB.updateItem(user.id,{
                 purchasedPackages: user!.purchasedPackages,
@@ -98,12 +74,7 @@ export const handler = async (event: any) => {
             classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
         ])
 
-        return {
-            statusCode: 200, 
-            body: JSON.stringify({
-                message: 'Succesfully canceled class'
-            })
-        }
+        return responseHelper('Succesfully canceled class');
 
     } else {
         await classesDB.updateItem(classInfo.id,{canceled: true})
@@ -120,11 +91,6 @@ export const handler = async (event: any) => {
 
         await Promise.all(users.map(user => usersDB.updateItem(user.id, {purchasedPackages: user.purchasedPackages} )))
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                message: "Succesfully canceled class"
-            })
-        }
+        return responseHelper('Succesfully canceled class');
     }
 }

@@ -2,6 +2,7 @@ import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
 import { CustomDynamoDB } from "../dynamodb/database";
 import { msInADay } from "../constants";
 import { validateToken } from "../helpers/validateToken";
+import { responseHelper } from "../helpers/responseHelper";
 
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
 const packagesDB = new CustomDynamoDB(process.env.PACKAGES_TABLE!, 'id');
@@ -9,22 +10,11 @@ const packagesDB = new CustomDynamoDB(process.env.PACKAGES_TABLE!, 'id');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return {
-            statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
-            body: JSON.stringify({
-                message: "User token not valid"
-            })
-        }
-        
+        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(tokenData.userType !== USER_TYPES.ADMIN) {
-        return {
-            statusCode: HTTP_ERROR_CODES.FORBIDDEN,
-            body: JSON.stringify({
-                message: "Action forbidden"
-            })
-        }
+        return responseHelper("Action forbidden", null, HTTP_ERROR_CODES.FORBIDDEN);
     }
 
     const body = JSON.parse(event.body);
@@ -37,7 +27,10 @@ export const handler = async (event: any) => {
     ]);
 
     if(!userInfo || !packageInfo) {
-        return {}
+        return responseHelper(
+            "Data not found for user or package", 
+            null, 
+            HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     const expireDate = new Date();
@@ -51,10 +44,5 @@ export const handler = async (event: any) => {
 
     await usersDB.updateItem(userInfo.id,{purchasedPackages: userInfo!.purchasedPackages})
     
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: "Succesfully added package to user"
-        })
-    }
+    return responseHelper("Succesfully added package to user");
 }

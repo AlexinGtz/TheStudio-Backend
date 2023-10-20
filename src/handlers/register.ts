@@ -1,7 +1,8 @@
 import { hash } from 'bcrypt'
 import { CustomDynamoDB } from '../dynamodb/database';
 import { v4 as uuidv4 } from 'uuid';
-import { USER_TYPES } from '../constants'
+import { USER_TYPES } from '../constants';
+import { responseHelper } from "../helpers/responseHelper";
 
 const database = new CustomDynamoDB(process.env.USERS_TABLE!, 'id')
 
@@ -17,7 +18,7 @@ export const handler = async (event) => {
 
     const encriptedPassword = await hash(password, 10);
 
-    const result = await database.putItem({
+    await database.putItem({
         id: uuidv4(),
         phoneNumber,
         firstName,
@@ -28,10 +29,5 @@ export const handler = async (event) => {
 
     //Send Whatsapp
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'Successfully created profile'
-        })
-    }
+    return responseHelper('Successfully created profile');
 }

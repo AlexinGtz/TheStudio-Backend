@@ -1,6 +1,8 @@
 import { CustomDynamoDB } from "../dynamodb/database";
 import { compare } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { responseHelper } from "../helpers/responseHelper";
+import { HTTP_ERROR_CODES } from "../constants";
 
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
 
@@ -10,28 +12,15 @@ export const handler = async (event) => {
     const { phoneNumber, password } = body;
 
     const user = await usersDB.getByIndex('phone-index', 'phoneNumber', phoneNumber);
-    console.log('user', user);
 
     if(!user) {
-        //error
-        return {
-            statusCode: 404,
-            body: JSON.stringify({
-                message: "user not in DB"
-            })
-        }
+        return responseHelper("User not in DB", null, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     const passwordsMatch = await compare(password, user.password);
 
     if(!passwordsMatch) {
-        //error
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: "Passwords doesn't  match"
-            })
-        }
+        return responseHelper("Passwords doesn't  match", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const token = jwt.sign(
@@ -43,18 +32,14 @@ export const handler = async (event) => {
             userType: user.userType
         }, 
         process.env.JWT_SECRET!,
-        {expiresIn: '1h'}
+        {expiresIn: '24h'}
     )
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'Successfully created profile',
-            userType: user.userType,
-            id: user.id,
-            phoneNumber: user.phoneNumber,
-            token,
-            expiresIn: 3600
-        })
-    }
+    return responseHelper('Successfully created profile', {
+        userType: user.userType,
+        id: user.id,
+        phoneNumber: user.phoneNumber,
+        token,
+        expiresIn: 3600*24
+    })
 }

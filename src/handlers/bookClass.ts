@@ -1,6 +1,7 @@
 import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken"
 import { HTTP_ERROR_CODES } from "../constants";
+import { responseHelper } from "../helpers/responseHelper";
 
 const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
@@ -8,23 +9,13 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'id');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return {
-            statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
-            body: JSON.stringify({
-                message: "User token not valid"
-            })
-        }
+        return responseHelper("User token not valid", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const userInfo = await usersDB.getItem(tokenData.id);
 
     if(!userInfo) {
-        return {
-            statusCode: HTTP_ERROR_CODES.NOT_FOUND,
-            body: JSON.stringify({
-                message: "Error retrieving user information"
-            })
-        }
+        return responseHelper("Error retrieving user information", null, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     let selectedPackage;
@@ -39,12 +30,7 @@ export const handler = async (event: any) => {
     }
 
     if(!selectedPackage) {
-        return {
-            statusCode: HTTP_ERROR_CODES.BAD_REQUEST,
-            body: JSON.stringify({
-                message: "User cannot book a class"
-            })
-        }
+        return responseHelper("User cannot book a class", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const body= JSON.parse(event.body);
@@ -56,13 +42,11 @@ export const handler = async (event: any) => {
     const classInfo = await classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate);
 
     if(!classInfo) {
-        //Error
-        return {}
+        return responseHelper("Class information not found", null, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     if(classInfo.canceled || classInfo?.registeredUsers.length === classInfo?.maxUsers) {
-        //Error: Cannot book class
-        return {}
+        return responseHelper("User cannot book class", null, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     classInfo.registeredUsers.push({id: userInfo!.id});
@@ -79,10 +63,5 @@ export const handler = async (event: any) => {
         classesDB.updateItem(classInfo.date,{registeredUsers: classInfo!.registeredUsers}, classInfo.month)
     ])
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: "Succesfully booked class"
-        })
-    }
+    return responseHelper("Succesfully booked class");
 }
