@@ -35,7 +35,11 @@
         "month": "11",
         "date": "2023-11-25T00:00:00Z",
         "instructor": "Maria",
-        "registeredUsers": [{"phoneNumber": "3313393021"}],
+        "registeredUsers": [{
+            "phoneNumber": "3313393021",
+            "firstName": "Alex",
+            "lastName": "Gutierrez"
+        }],
         "maxUsers": 6,
         "cancelled": false
     },
@@ -51,7 +55,16 @@
         "month": "11",
         "date": "2023-11-24T00:00:00Z",
         "instructor": "Maria",
-        "registeredUsers": [{"phoneNumber": "3313393021"}, {"phoneNumber": "3313392031"}],
+        "registeredUsers": [{
+            "phoneNumber": "3313393021",
+            "firstName": "Alex",
+            "lastName": "Gutierrez"
+        }, 
+        {
+            "phoneNumber": "3313392031",
+            "firstName": "Manuel",
+            "lastName": "Gutierrez"
+        }],
         "maxUsers": 6,
         "cancelled": false
     },
@@ -83,7 +96,11 @@
         "month": "11",
         "date": "2023-11-18T00:00:00Z",
         "instructor": "Maria",
-        "registeredUsers": [{"phoneNumber": "3313392031"}],
+        "registeredUsers": [{
+            "phoneNumber": "3313392031",
+            "firstName": "Manuel",
+            "lastName": "Gutierrez"
+        }],
         "maxUsers": 6,
         "cancelled": false
     },
