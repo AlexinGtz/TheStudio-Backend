@@ -12,18 +12,24 @@ export const handler = async (event: any) => {
         return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const userInfo = await usersDB.getItem(tokenData.id);
+    const userInfo = await usersDB.getItem(tokenData.phoneNumber);
+
 
     if(!userInfo) {
         return responseHelper("User info not found", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     const today = new Date();
+    
+    if (!userInfo.bookedClasses || userInfo.bookedClasses.length === 0) {
+        return responseHelper('Success', {classes: []});
+    }
+    
     const classes = await classesDB.batchGetById(userInfo.bookedClasses);
 
     const filteredClasses = classes.filter((c) => {
         const classDate = new Date(c.date);
-        return classDate.getTime() > today.getTime();
+        return (classDate.getTime() > today.getTime()) && !c.cancelled;
     });
 
     return responseHelper('Success', {classes: filteredClasses});

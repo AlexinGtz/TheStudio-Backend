@@ -1,9 +1,8 @@
-import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
+import { HTTP_ERROR_CODES } from "../constants";
 import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken";
 import { responseHelper } from "../helpers/responseHelper";
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event: any) => {
@@ -18,18 +17,5 @@ export const handler = async (event: any) => {
         return responseHelper("User info not found", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    const today = new Date();
-    const nextMonth = new Date();
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-
-    const classes = (await Promise.all([
-        await classesDB.query((today.getMonth() + 1).toString(), today.toISOString(), '>'),
-        await classesDB.query((today.getMonth() + 2).toString(), nextMonth.toISOString(), '<')
-    ])).flat();
-
-    console.log('classes', classes);
-
-    const filteredClasses = classes.filter((c) => !c.cancelled);
-
-    return responseHelper('Success', {classes: filteredClasses})
+    return responseHelper('Success', {classes: userInfo.bookedClasses});
 }

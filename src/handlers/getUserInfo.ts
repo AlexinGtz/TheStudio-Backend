@@ -1,7 +1,7 @@
 import { HTTP_ERROR_CODES } from "../constants";
 import { CustomDynamoDB } from "../dynamodb/database";
-import { validateToken } from "../helpers/validateToken";
 import { responseHelper } from "../helpers/responseHelper";
+import { validateToken } from "../helpers/validateToken";
 
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
@@ -11,13 +11,21 @@ export const handler = async (event: any) => {
         return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const userData = await usersDB.getItem(tokenData.phoneNumber);
+    if (tokenData.userType !== 'admin') {
+        return responseHelper("User is not an admin", undefined, HTTP_ERROR_CODES.UNAUTHORIZED);
+    }
+
+    const { userPhoneNumber } = event.queryStringParameters;
+
+    if(!userPhoneNumber) {
+        return responseHelper("User phone number not provided", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
+    const userData = await usersDB.getItem(userPhoneNumber);
 
     if(!userData) {
         return responseHelper("User data not found", undefined, HTTP_ERROR_CODES.NOT_FOUND)
     }
-
-    //TODO: Get Profile Picture
 
     return responseHelper("Success", {
         firstName: userData.firstName,

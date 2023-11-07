@@ -11,7 +11,9 @@ export const handler = async (event: any) => {
         return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
+    const packagesData = await packagesDB.scan();
+
     return responseHelper('Success', {
-        packages: await packagesDB.scan(),
+        packages: packagesData.items,
     });
 }

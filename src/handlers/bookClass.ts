@@ -12,16 +12,16 @@ export const handler = async (event: any) => {
         return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const userInfo = await usersDB.getItem(tokenData.id);
+    const userInfo = await usersDB.getItem(tokenData.phoneNumber);
 
     if(!userInfo) {
         return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     let selectedPackage;
-    const today = new Date();
+    const today = new Date(); //2023-10-23T14:37:45-06:00
 
-    for(let p of userInfo?.purchasedPackages) {
+    for(let p of userInfo.purchasedPackages) {
         const pDate = new Date(p.expireDate)
         if(p.availableClasses > 0 && today < pDate){
             selectedPackage = p;
@@ -33,7 +33,7 @@ export const handler = async (event: any) => {
         return responseHelper("User cannot book a class", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const body= JSON.parse(event.body);
+    const body = JSON.parse(event.body);
 
     const { classDate } = body;
 
@@ -45,22 +45,22 @@ export const handler = async (event: any) => {
         return responseHelper("Class information not found", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    if(classInfo.canceled || classInfo?.registeredUsers.length === classInfo?.maxUsers) {
+    if(classInfo.cancelled || classInfo?.registeredUsers.length === classInfo?.maxUsers) {
         return responseHelper("User cannot book class", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    classInfo.registeredUsers.push({id: userInfo!.id});
+    classInfo.registeredUsers.push({phoneNumber: userInfo!.phoneNumber});
     selectedPackage.availableClasses = selectedPackage.availableClasses - 1;
     userInfo.bookedClasses.push({pk: classInfo.month, sk: classInfo.date});
 
     await Promise.all([
-        usersDB.updateItem(userInfo.id,
+        usersDB.updateItem(userInfo.phoneNumber,
             {
                 purchasedPackages: userInfo!.purchasedPackages,
                 bookedClasses: userInfo.bookedClasses
             }
             ),
-        classesDB.updateItem(classInfo.date,{registeredUsers: classInfo!.registeredUsers}, classInfo.month)
+        classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
     ])
 
     return responseHelper("Succesfully booked class");

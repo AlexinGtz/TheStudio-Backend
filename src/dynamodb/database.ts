@@ -11,16 +11,16 @@ export class CustomDynamoDB {
         this.tableName = tableName;
         this.primaryKey = primaryKey;
         this.DB = new DynamoDBClient({
-            endpoint: "http://localhost:4000"
+            endpoint: process.env.STAGE === 'local' ? "http://localhost:4000" : undefined,
         });
         this.sortingKey = sortingKey ?? null;
     }
 
-    async getItem(primaryKey, secondaryKey?) {
-        const pk: any = marshall({[this.primaryKey]: primaryKey});
+    async getItem(primaryKeyValue, secondaryKeyValue?) {
+        const pk: any = marshall({[this.primaryKey]: primaryKeyValue});
         let sk;
-        if (secondaryKey) {
-            sk = marshall({[this.sortingKey]: secondaryKey})
+        if (secondaryKeyValue) {
+            sk = marshall({[this.sortingKey]: secondaryKeyValue})
         }
 
         const options = new GetItemCommand({
@@ -31,60 +31,11 @@ export class CustomDynamoDB {
             }
         })
 
-        console.log('options', options);
-
         const dbRes = await this.DB.send(options);
         if(!dbRes.Item) {
             return null;
         }
         return unmarshall(dbRes.Item);
-    }
-
-    async getByPrimaryKey(id, identifier, indexName, attributes){
-        const options = new QueryCommand({
-            KeyConditionExpression: `${identifier ?? this.primaryKey} = :id`,
-            ExpressionAttributeValues: {
-                ":id": {
-                    S: id,
-                }
-            },
-            TableName: this.tableName,
-            IndexName: indexName ?? null,
-            Select: attributes ? 'SPECIFIC_ATTRIBUTES' : 'ALL_ATTRIBUTES',
-            ProjectionExpression: attributes ? 
-                attributes.join(',')
-                : null,
-        })
-        const dbRes = await this.DB.send(options);
-        if(!dbRes.Items.length) {
-            return null;
-        }
-        return unmarshall(dbRes.Items[0]);
-    }
-
-    async getByIndex(
-        indexName,
-        pKeyName,
-        pKeyValue,
-        sortKeyName?,
-        sortKeyValue?,
-        sortComparison?){
-        const options = new QueryCommand({
-            KeyConditionExpression: `${pKeyName} = :value`,
-            ExpressionAttributeValues: {
-                ":value": {
-                    S: pKeyValue,
-                }
-            },
-            TableName: this.tableName,
-            IndexName: indexName,
-        })
-
-        const dbRes = await this.DB.send(options);
-        if(!dbRes.Items.length) {
-            return null;
-        }
-        return unmarshall(dbRes.Items[0]);
     }
 
     async query(id, secondaryKeyVal?, sortComparison?, indexName?) {
@@ -127,14 +78,20 @@ export class CustomDynamoDB {
         return this.DB.send(options);
     }
 
-    async scan() { 
+    async scan(limit?: number, lastKey?: string) { 
         const options = new ScanCommand({
             TableName: this.tableName,
+            Limit: limit ?? undefined,
+            ExclusiveStartKey: lastKey ? marshall({[this.primaryKey]: lastKey}) : undefined,
         });
 
         const dbRes = await this.DB.send(options)
-
-        return (dbRes.Items.map(e => unmarshall(e)));
+        const unmarshalledItems = dbRes.Items.map(e => unmarshall(e));
+        const lastEvaluatedKey = dbRes.LastEvaluatedKey;
+        return ({
+            items: unmarshalledItems,
+            lastEvaluatedKey
+        });
     }
 
     async updateItem(pk, item, sk?) {
@@ -178,6 +135,7 @@ export class CustomDynamoDB {
     }
 
     async batchGetById(idArray) {
+        console.log('idArray', idArray);
         const options = new BatchGetItemCommand({
             RequestItems: {
                 [this.tableName]: {
@@ -220,13 +178,5 @@ export class CustomDynamoDB {
         }
 
         return Promise.all(callsToDB);
-    }
-
-    static marshall(item) {
-        return marshall(item);
-    }
-
-    static unmarshall(item) {
-        return unmarshall(item);
     }
 }

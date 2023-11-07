@@ -1,12 +1,19 @@
 service: the-studio
 
+configValidationMode: error
+
 plugins: 
+  - serverless-plugin-typescript
   - serverless-offline
   - serverless-dynamodb
   - serverless-s3-local
+  - serverless-plugin-common-excludes
   - serverless-plugin-include-dependencies
-  - serverless-plugin-typescript
 
+package:
+  excludeDevDependencies: false
+  individually: true
+  
 provider: 
   name: aws
   runtime: nodejs18.x
@@ -26,7 +33,7 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
-          Resource: 'arn:aws:dynamodb:us-east-1:*:*'
+          Resource: 'arn:aws:dynamodb:us-east-2:*:*'
         - Effect: Allow
           Action: 
             - s3:GetObject
@@ -35,7 +42,6 @@ provider:
   apiGateway:
     restApiId: !Ref MainApi
     restApiRootResourceId: !GetAtt MainApi.RootResourceId
-    cors: true
 
 resources:
   - '${file(./aws/resources/cloudfront.yaml)}'
@@ -81,7 +87,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/register.ts'
+          - '!src/**'
+          - 'src/handlers/register.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
       events:
@@ -97,7 +107,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/login.ts'
+          - '!src/**'
+          - 'src/handlers/login.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
@@ -114,7 +128,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/bookClass.ts'
+          - '!src/**'
+          - 'src/handlers/bookClass.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
@@ -132,7 +150,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/cancelClass.ts'
+          - '!src/**'
+          - 'src/handlers/cancelClass.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
@@ -150,7 +172,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/getUserBookedClasses.ts'
+          - '!src/**'
+          - 'src/handlers/getUserBookedClasses.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
@@ -168,7 +194,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/getUpcomingClasses.ts'
+          - '!src/**'
+          - 'src/handlers/getUpcomingClasses.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
@@ -186,7 +216,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/createClasses.ts'
+          - '!src/**'
+          - 'src/handlers/createClasses.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
@@ -203,7 +237,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/getProfile.ts'
+          - '!src/**'
+          - 'src/handlers/getProfile.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
@@ -220,7 +258,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/getAllPackages.ts'
+          - '!src/**'
+          - 'src/handlers/getAllPackages.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
@@ -237,7 +279,11 @@ functions:
       memorySize: 264
       package:
         patterns:
-          - 'src/handlers/addPackageToUser.ts'
+          - '!src/**'
+          - 'src/handlers/addPackageToUser.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
@@ -245,5 +291,173 @@ functions:
       events:
         - http:
             path: /addPackageToUser
+            method: post
+            cors: true
+  getUsers:
+      name: ${self:custom.base}-getUsers
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getUsers.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/getUsers.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getUsers
+            method: get
+            cors: true
+  getClassInfo:
+      name: ${self:custom.base}-getClassInfo
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getClassInfo.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/getClassInfo.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        CLASSES_TABLE: ${self:custom.environment.CLASSES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getClassInfo
+            method: get
+            cors: true
+  getUserInfo:
+      name: ${self:custom.base}-getUserInfo
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getUserInfo.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/getUserInfo.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getUserInfo
+            method: get
+            cors: true
+  getUserClasses:
+      name: ${self:custom.base}-getUserClasses
+      description: 'Allows the user and admin to cancel a class'
+      handler: src/handlers/getUserClasses.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/getUserClasses.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getUserClasses
+            method: get
+            cors: true
+  editUserData:
+      name: ${self:custom.base}-editUserData
+      description: 'Allows the user to book a class'
+      handler: src/handlers/editUserData.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/editUserData.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /editUserData
+            method: post
+            cors: true
+  updateUserPassword:
+      name: ${self:custom.base}-updateUserPassword
+      description: 'Allows the user to book a class'
+      handler: src/handlers/updateUserPassword.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/updateUserPassword.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /updateUserPassword
+            method: post
+            cors: true
+  deleteUser:
+      name: ${self:custom.base}-deleteUser
+      description: 'Allows the user to book a class'
+      handler: src/handlers/deleteUser.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/deleteUser.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /deleteUser/{userPhoneNumber}
+            method: delete
+            cors: true
+  editPackageInfo:
+      name: ${self:custom.base}-editPackageInfo
+      description: 'Allows the user to book a class'
+      handler: src/handlers/editPackageInfo.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/editPackageInfo.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /editPackageInfo
             method: post
             cors: true

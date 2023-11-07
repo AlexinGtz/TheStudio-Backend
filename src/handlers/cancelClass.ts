@@ -20,7 +20,7 @@ export const handler = async (event: any) => {
     const classDateObj = new Date(classDate);
 
     const [userInfo, classInfo] = await Promise.all([
-        usersDB.getItem(tokenData.id),
+        usersDB.getItem(tokenData.phoneNumber),
         classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate),
     ]);
 
@@ -28,8 +28,8 @@ export const handler = async (event: any) => {
         return responseHelper("Error retrieving user or class information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    if(classInfo.canceled) {
-        return responseHelper("Class already canceled", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    if(classInfo.cancelled) {
+        return responseHelper("Class already cancelled", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if( (userInfo.userType === USER_TYPES.ADMIN && userId)
@@ -42,7 +42,7 @@ export const handler = async (event: any) => {
             return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
         }
 
-        const regUser = classInfo.registeredUsers.find(e => e.id === user.id);
+        const regUser = classInfo.registeredUsers.find(e => e.phoneNumber === user.phoneNumber);
         if(!regUser) {
             return responseHelper(
                 "Cannot cancel class because the user is not registered", 
@@ -51,9 +51,9 @@ export const handler = async (event: any) => {
         }
         
         const classDate = new Date(classInfo.date);
-        const miliseconds = classDate.getTime() - today.getTime();
+        const timeDifferenceInMS = classDate.getTime() - today.getTime();
 
-        if((miliseconds/1000) > 86400) {
+        if((timeDifferenceInMS/1000) > 86400) {
             for(let p of user?.purchasedPackages) {
                 const pDate = new Date(p.expireDate)
                 if(today < pDate){
@@ -63,22 +63,25 @@ export const handler = async (event: any) => {
             }
         }
 
-        classInfo.registeredUsers = classInfo.registeredUsers.filter(e => e.id !== user.id);
+        classInfo.registeredUsers = classInfo.registeredUsers.filter(e => e.phoneNumber !== user.phoneNumber);
         const newBookedClasses = user.bookedClasses.filter((c) => c.sk !== classInfo.date);
 
         await Promise.all([
-            usersDB.updateItem(user.id,{
+            usersDB.updateItem(user.phoneNumber,{
                 purchasedPackages: user!.purchasedPackages,
                 bookedClasses: newBookedClasses,
             }),
             classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
         ])
 
-        return responseHelper('Succesfully canceled class');
+        return responseHelper('Succesfully cancelled class');
 
     } else {
-        await classesDB.updateItem(classInfo.id,{canceled: true})
-        const users = await usersDB.batchGetById(classInfo.registeredUsers.map(user => user.id))
+        await classesDB.updateItem(classInfo.month,{cancelled: true}, classInfo.date)
+        if(classInfo.registeredUsers.length === 0) return responseHelper('Succesfully cancelled class');
+        const users = await usersDB.batchGetById(classInfo.registeredUsers.map(user => ({
+            pk: user.phoneNumber
+        })));
         users.forEach(user => {
             for(let p of user.purchasedPackages) {
                 const pDate = new Date(p.expireDate)
@@ -89,8 +92,8 @@ export const handler = async (event: any) => {
             }
         });
 
-        await Promise.all(users.map(user => usersDB.updateItem(user.id, {purchasedPackages: user.purchasedPackages} )))
+        await Promise.all(users.map(user => usersDB.updateItem(user.phoneNumber, {purchasedPackages: user.purchasedPackages} )))
 
-        return responseHelper('Succesfully canceled class');
+        return responseHelper('Succesfully cancelled class');
     }
 }

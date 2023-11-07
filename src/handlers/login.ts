@@ -1,5 +1,5 @@
 import { CustomDynamoDB } from "../dynamodb/database";
-import { compare } from 'bcrypt';
+import { compare } from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { responseHelper } from "../helpers/responseHelper";
 import { HTTP_ERROR_CODES } from "../constants";
@@ -10,11 +10,11 @@ export const handler = async (event) => {
     const body = JSON.parse(event.body);
 
     const { phoneNumber, password } = body;
-
+    
     const user = await usersDB.getItem(phoneNumber);
 
-    if(!user) {
-        return responseHelper("User not in DB", undefined, HTTP_ERROR_CODES.NOT_FOUND);
+    if(!user || user.deleted) {
+        return responseHelper("Usuario no registrado", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     const passwordsMatch = await compare(password, user.password);
@@ -28,7 +28,6 @@ export const handler = async (event) => {
             phoneNumber, 
             firstName: user.firstName, 
             lastName: user.lastName,
-            id: user.id,
             userType: user.userType
         }, 
         process.env.JWT_SECRET!,
@@ -37,7 +36,6 @@ export const handler = async (event) => {
 
     return responseHelper('Successfully logged in', {
         userType: user.userType,
-        id: user.id,
         phoneNumber: user.phoneNumber,
         token,
         expiresIn: 3600*24

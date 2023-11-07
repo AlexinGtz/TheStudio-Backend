@@ -100,7 +100,7 @@ export const handler = async (event: any) => {
                 instructor: "Maria",
                 registeredUsers: [],
                 maxUsers: 6,
-                canceled: false
+                cancelled: false
             });
         }
 

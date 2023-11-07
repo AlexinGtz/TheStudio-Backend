@@ -6,27 +6,30 @@
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 1,
-        "expireDate": "2023-10-28T00:00:00"
+        "expireDate": "2023-11-28T00:00:00",
+        "totalClasses": 4
     },
     {
         "availableClasses": 1,
-        "expireDate": "2023-10-11T00:00:00"
+        "expireDate": "2023-11-11T00:00:00",
+        "totalClasses": 1
     }],
-    "bookedClasses": [{"pk": "10", "sk": "2023-10-25T00:00:00"}, {"pk": "10", "sk": "2023-10-24T00:00:00"}],
+    "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
     "deleted": false,
     "whatsappNotifications": false
 },
 {
-    "firstName": "Alex",
+    "firstName": "Manuel",
     "lastName": "Gutierrez",
     "phoneNumber": "3313392031",
-    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 0,
-        "expireDate": "2023-10-18T00:00:00"
+        "expireDate": "2023-11-18T00:00:00",
+        "totalClasses": 4
     }],
-    "bookedClasses": [{"pk": "10", "sk": "2023-10-22T00:00:00"}],
+    "bookedClasses": [{"pk": "11", "sk": "2023-11-22T00:00:00Z"}],
     "deleted": false,
     "whatsappNotifications": false
 },

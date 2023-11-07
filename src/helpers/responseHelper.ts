@@ -6,7 +6,7 @@ export const responseHelper = (message: string, data?: any, errorStatusCode?: nu
         body: JSON.stringify({
             statusCode,
             message,
-            data
+            ...data
         })
     }
 }

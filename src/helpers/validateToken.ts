@@ -18,7 +18,7 @@ export const validateToken = async (token: string) => {
     }
 
     return {
-        id: decodedToken.id,
+        phoneNumber: decodedToken.phoneNumber,
         userType: decodedToken.userType,
         firstName: decodedToken.firstName,
         lastName: decodedToken.lastName

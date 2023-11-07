@@ -19,10 +19,10 @@ export const handler = async (event: any) => {
 
     const body = JSON.parse(event.body);
 
-    const { userId, packageId } = body;
+    const { userPhoneNumber, packageId } = body;
 
     const [userInfo, packageInfo ] = await Promise.all([
-        usersDB.getItem(userId),
+        usersDB.getItem(userPhoneNumber),
         packagesDB.getItem(packageId)
     ]);
 
@@ -39,10 +39,11 @@ export const handler = async (event: any) => {
 
     userInfo.purchasedPackages.push({
         availableClasses: packageInfo.classQuantity,
-        expireDate: expireDate.toISOString()
+        expireDate: expireDate.toISOString(),
+        totalClasses: packageInfo.classQuantity,
     })
 
-    await usersDB.updateItem(userInfo.id,{purchasedPackages: userInfo!.purchasedPackages})
+    await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo!.purchasedPackages})
     
     return responseHelper("Succesfully added package to user");
 }

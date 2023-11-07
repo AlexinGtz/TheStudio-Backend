@@ -1,9 +1,9 @@
-import { hash } from 'bcrypt'
+import { hash } from 'bcryptjs'
 import { CustomDynamoDB } from '../dynamodb/database';
 import { HTTP_ERROR_CODES, USER_TYPES } from '../constants';
 import { responseHelper } from "../helpers/responseHelper";
 
-const database = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber')
+const database = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event) => {
     const body = JSON.parse(event.body);
