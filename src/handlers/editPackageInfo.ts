@@ -17,8 +17,6 @@ export const handler = async (event: any) => {
 
     const packageInfo = JSON.parse(event.body);
 
-    console.log('packageInfo', packageInfo);
-
     const newPackageInfo = {...packageInfo, updatedAt: new Date().toISOString()}
 
     delete newPackageInfo.id;
@@ -26,7 +24,6 @@ export const handler = async (event: any) => {
     try {
         await packagesDB.updateItem(packageInfo.id, newPackageInfo);
     } catch (error) {
-        console.log('error', error);
         return responseHelper("Error updating package information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 

@@ -41,4 +41,13 @@
     "userType": "admin",
     "deleted": false,
     "whatsappNotifications": false
+},
+{
+    "firstName": "Alex",
+    "lastName": "Gutierrez",
+    "phoneNumber": "3313397232",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "userType": "dev",
+    "deleted": false,
+    "whatsappNotifications": false
 }]

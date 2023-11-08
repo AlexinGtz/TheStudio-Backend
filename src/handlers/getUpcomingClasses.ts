@@ -27,8 +27,6 @@ export const handler = async (event: any) => {
         await classesDB.query((today.getMonth() + 2).toString(), nextMonth.toISOString(), '<')
     ])).flat();
 
-    console.log('classes', classes);
-
     const filteredClasses = classes.filter((c) => !c.cancelled);
 
     return responseHelper('Success', {classes: filteredClasses})

@@ -93,7 +93,7 @@ export const handler = async (event: any) => {
 
         for (let hour of dayToSchedule) {
             let newDay = new Date(startDay.getTime());
-            newDay.setHours(hour);
+            newDay.setHours(startDay.getHours() + hour);
             itemsToInsert.push({
                 month: month,
                 date: newDay.toISOString(),

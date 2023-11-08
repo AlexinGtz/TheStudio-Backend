@@ -135,7 +135,6 @@ export class CustomDynamoDB {
     }
 
     async batchGetById(idArray) {
-        console.log('idArray', idArray);
         const options = new BatchGetItemCommand({
             RequestItems: {
                 [this.tableName]: {

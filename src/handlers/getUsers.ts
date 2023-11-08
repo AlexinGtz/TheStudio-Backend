@@ -40,13 +40,11 @@ export const handler = async (event: any) => {
         if(user.deleted) {
             return false;
         }
-        else if(user.userType === "admin") {
+        else if(user.userType === "admin" || user.userType === "dev") {
             return false;
         }
         return true;
     });
-
-    console.log('filteredUsers', filteredUsers);
 
     return responseHelper("Success", { 
         users: filteredUsers,

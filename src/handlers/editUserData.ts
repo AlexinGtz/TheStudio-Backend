@@ -29,7 +29,6 @@ export const handler = async (event: any) => {
             lastName: userData.lastName,
         });
     } catch (error) {
-        console.log('error', error);
         return responseHelper("Error updating user information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 

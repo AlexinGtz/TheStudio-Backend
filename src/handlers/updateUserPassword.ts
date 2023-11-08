@@ -34,7 +34,6 @@ export const handler = async (event: any) => {
             password: userData.password
         });
     } catch (error) {
-        console.log('error', error);
         return responseHelper("Error updating user information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 

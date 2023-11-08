@@ -22,7 +22,6 @@ export const handler = async (event: any) => {
             deleted: true
         });
     } catch (error) {
-        console.log('error', error);
         return responseHelper("Error updating user information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
