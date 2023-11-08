@@ -15,3 +15,27 @@ Resources:
           Value: ${self:provider.stage}
         - Key: Service
           Value: ${self:service}
+  TheStudioWebPageBucketPolicy: 
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: 
+        Ref: TheStudioWebPage
+      PolicyDocument:
+        Version: "2012-10-17"
+        Id: PolicyForPrivateWebsiteContent
+        Statement:
+          - Action: 
+              - s3:GetObject
+            Effect: Allow
+            Resource: 
+              Fn::Join:
+                - ""
+                - - "arn:aws:s3:::"
+                  - Ref: TheStudioWebPage
+                  - "/*"
+            Principal: 
+              AWS: 
+                - Fn::Join:
+                  - ""
+                  - - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity "
+                    - Ref: MainOAI
