@@ -3,6 +3,12 @@ export const responseHelper = (message: string, data?: any, errorStatusCode?: nu
 
     return {
         statusCode,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Credentials': true,
+        },
         body: JSON.stringify({
             statusCode,
             message,
