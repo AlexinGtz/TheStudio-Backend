@@ -8,18 +8,21 @@
     "id": "2",
     "classQuantity": 4,
     "expireDays": 10,
-    "cost": 950
+    "cost": 950,
+    "updatedAt": ""
 },
 {
     "id": "3",
     "classQuantity": 8,
     "expireDays": 20,
-    "cost": 1500
+    "cost": 1500,
+    "updatedAt": ""
 },
 {
     "id": "4",
     "classQuantity": 20,
     "expireDays": 30,
-    "cost": 2000
+    "cost": 2000,
+    "updatedAt": ""
 }
 ]

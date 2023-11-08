@@ -19,7 +19,7 @@ export const handler = async (event: any) => {
 
     console.log('packageInfo', packageInfo);
 
-    const newPackageInfo = {...packageInfo}
+    const newPackageInfo = {...packageInfo, updatedAt: new Date().toISOString()}
 
     delete newPackageInfo.id;
 
