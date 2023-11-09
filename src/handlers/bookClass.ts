@@ -1,6 +1,6 @@
 import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken"
-import { HTTP_ERROR_CODES } from "../constants";
+import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
 import { responseHelper } from "../helpers/responseHelper";
 import { selectEarliestPackage } from "../helpers/packageHelper";
 
@@ -13,53 +13,101 @@ export const handler = async (event: any) => {
         return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
+    const { classDate, users } = JSON.parse(event.body);
+
+    const today = new Date();
+
+    if(!classDate) {
+        return responseHelper("No se mando la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
+    if(classDate < today.toISOString()) {
+        return responseHelper("No se puede reservar una clase pasada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
     const userInfo = await usersDB.getItem(tokenData.phoneNumber);
 
     if(!userInfo) {
         return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    const { classDate } = JSON.parse(event.body);
+    if(userInfo.userType === USER_TYPES.ADMIN && !users) {
+        return responseHelper("No se mando la lista de usuarios", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
+    const usersToBook = userInfo.userType === USER_TYPES.ADMIN ? [...users] : [userInfo.phoneNumber];
+    console.log('usersToBook', usersToBook);
+
+    const usersData = await Promise.all(usersToBook.map(u => usersDB.getItem(u)));
+    console.log('usersData', usersData);
     const classDateObj = new Date(classDate);
 
-    const classAlreadyBooked = userInfo.bookedClasses.find((c) => c.sk === classDate);
+    const usersWithoutClassBooked = usersData.filter(u => {
+        if(!u) return false;
+        const classBooked = u.bookedClasses.some(c => c.sk === classDate);
+        return !classBooked;
+    });
 
-    if(classAlreadyBooked || classDateObj < new Date()) { 
-        return responseHelper("Esa clase ya la tiene agendada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    console.log('usersWithoutClassBooked', usersWithoutClassBooked);
+
+    if(usersWithoutClassBooked.length === 0) {
+        return responseHelper("Esta clase ya esta reservada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const selectedPackage = selectEarliestPackage(userInfo.purchasedPackages);
-
-    if(!selectedPackage || selectedPackage.availableClasses <= 0) {
-        return responseHelper("No tienes clases disponibles", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
-    }
-    
     const classInfo = await classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate);
-
+    
     if(!classInfo) {
         return responseHelper("La clase seleccionada no existe", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    if(classInfo.cancelled || classInfo?.registeredUsers.length === classInfo?.maxUsers) {
-        return responseHelper("User cannot book class", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    const availableSlots = classInfo.maxUsers - classInfo.registeredUsers.length;
+    console.log('availableSlots', availableSlots);
+
+    if(classInfo.cancelled || availableSlots === 0) {
+        return responseHelper("La clase esta llena o ha sido cancelada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    classInfo.registeredUsers.push({
-        phoneNumber: userInfo.phoneNumber,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName
+    if(availableSlots < usersWithoutClassBooked.length) {
+        return responseHelper("No hay suficientes lugares para reservar", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
+    const userUpdateRequests: Array<any> = [];
+    let updatedUsersCount = 0;
+ 
+    usersWithoutClassBooked.forEach((u) => {
+        if(!u) return;
+        const selectedPackage = selectEarliestPackage(u.purchasedPackages);
+        console.log('selectedPackage', selectedPackage, u.phoneNumber);
+
+        if(!selectedPackage || selectedPackage.availableClasses <= 0) {
+            return;
+        }
+    
+        classInfo.registeredUsers.push({
+            phoneNumber: u.phoneNumber,
+            firstName: u.firstName,
+            lastName: u.lastName
+        });
+    
+        selectedPackage.availableClasses = selectedPackage.availableClasses - 1;
+        u.bookedClasses.push({pk: classInfo.month, sk: classInfo.date});
+        console.log('userAfterUpdate', u);
+        updatedUsersCount++;
+        userUpdateRequests.push(usersDB.updateItem(u.phoneNumber,
+        {
+            purchasedPackages: u.purchasedPackages,
+            bookedClasses: u.bookedClasses
+        }));
     });
 
-    selectedPackage.availableClasses = selectedPackage.availableClasses - 1;
-    userInfo.bookedClasses.push({pk: classInfo.month, sk: classInfo.date});
+    if(updatedUsersCount === 0) {
+        return responseHelper("No se reservó para ningún usuario, clase ya agendada o no tienen clases a favor", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
+    console.log('classInfo.registeredUsers', classInfo.registeredUsers);
 
     await Promise.all([
-        usersDB.updateItem(userInfo.phoneNumber,
-            {
-                purchasedPackages: userInfo!.purchasedPackages,
-                bookedClasses: userInfo.bookedClasses
-            }
-            ),
+        userUpdateRequests,
         classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
     ])
 

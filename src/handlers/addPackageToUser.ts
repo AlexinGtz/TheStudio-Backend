@@ -44,7 +44,7 @@ export const handler = async (event: any) => {
         purchasedDate: new Date().toISOString(),
     })
 
-    await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo!.purchasedPackages})
+    await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo.purchasedPackages})
     
     return responseHelper("Succesfully added package to user");
 }

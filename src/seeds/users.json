@@ -19,6 +19,36 @@
     "whatsappNotifications": false
 },
 {
+    "firstName": "Lucy",
+    "lastName": "Garcia",
+    "phoneNumber": "3313355405",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "userType": "user",
+    "purchasedPackages": [{
+        "availableClasses": 1,
+        "expireDate": "2023-11-28T00:00:00",
+        "totalClasses": 4
+    }],
+    "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
+    "deleted": false,
+    "whatsappNotifications": false
+},
+{
+    "firstName": "Marcia",
+    "lastName": "de la Fuente",
+    "phoneNumber": "3313397232",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "userType": "user",
+    "purchasedPackages": [{
+        "availableClasses": 1,
+        "expireDate": "2023-11-28T00:00:00",
+        "totalClasses": 4
+    }],
+    "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
+    "deleted": false,
+    "whatsappNotifications": false
+},
+{
     "firstName": "Manuel",
     "lastName": "Gutierrez",
     "phoneNumber": "3313392031",
@@ -34,6 +64,51 @@
     "whatsappNotifications": false
 },
 {
+    "firstName": "Felipe",
+    "lastName": "Andaluz",
+    "phoneNumber": "3313331333",
+    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "userType": "user",
+    "purchasedPackages": [{
+        "availableClasses": 1,
+        "expireDate": "2023-11-28T00:00:00",
+        "totalClasses": 4
+    }],
+    "bookedClasses": [],
+    "deleted": false,
+    "whatsappNotifications": false
+},
+{
+    "firstName": "Pako",
+    "lastName": "Fonseca",
+    "phoneNumber": "3312221222",
+    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "userType": "user",
+    "purchasedPackages": [{
+        "availableClasses": 1,
+        "expireDate": "2023-11-28T00:00:00",
+        "totalClasses": 4
+    }],
+    "bookedClasses": [],
+    "deleted": false,
+    "whatsappNotifications": false
+},
+{
+    "firstName": "Jahir",
+    "lastName": "Silva",
+    "phoneNumber": "9221342341",
+    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "userType": "user",
+    "purchasedPackages": [{
+        "availableClasses": 1,
+        "expireDate": "2023-11-28T00:00:00",
+        "totalClasses": 4
+    }],
+    "bookedClasses": [],
+    "deleted": false,
+    "whatsappNotifications": false
+},
+{
     "firstName": "Alex",
     "lastName": "Gutierrez",
     "phoneNumber": "3312188843",
@@ -45,7 +120,7 @@
 {
     "firstName": "Alex",
     "lastName": "Gutierrez",
-    "phoneNumber": "3313397232",
+    "phoneNumber": "3313397233",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "dev",
     "deleted": false,

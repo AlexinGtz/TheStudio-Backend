@@ -12,10 +12,9 @@ export const handler = async (event: any) => {
         return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const body= JSON.parse(event.body);
     const today = new Date();
 
-    const { classDate, userId } = body;
+    const { classDate, userId } = JSON.parse(event.body);
 
     const classDateObj = new Date(classDate);
 
