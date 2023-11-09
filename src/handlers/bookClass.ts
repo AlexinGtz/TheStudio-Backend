@@ -36,10 +36,8 @@ export const handler = async (event: any) => {
     }
 
     const usersToBook = userInfo.userType === USER_TYPES.ADMIN ? [...users] : [userInfo.phoneNumber];
-    console.log('usersToBook', usersToBook);
 
     const usersData = await Promise.all(usersToBook.map(u => usersDB.getItem(u)));
-    console.log('usersData', usersData);
     const classDateObj = new Date(classDate);
 
     const usersWithoutClassBooked = usersData.filter(u => {
@@ -47,8 +45,6 @@ export const handler = async (event: any) => {
         const classBooked = u.bookedClasses.some(c => c.sk === classDate);
         return !classBooked;
     });
-
-    console.log('usersWithoutClassBooked', usersWithoutClassBooked);
 
     if(usersWithoutClassBooked.length === 0) {
         return responseHelper("Esta clase ya esta reservada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
@@ -61,7 +57,6 @@ export const handler = async (event: any) => {
     }
 
     const availableSlots = classInfo.maxUsers - classInfo.registeredUsers.length;
-    console.log('availableSlots', availableSlots);
 
     if(classInfo.cancelled || availableSlots === 0) {
         return responseHelper("La clase esta llena o ha sido cancelada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
@@ -77,7 +72,6 @@ export const handler = async (event: any) => {
     usersWithoutClassBooked.forEach((u) => {
         if(!u) return;
         const selectedPackage = selectEarliestPackage(u.purchasedPackages);
-        console.log('selectedPackage', selectedPackage, u.phoneNumber);
 
         if(!selectedPackage || selectedPackage.availableClasses <= 0) {
             return;
@@ -91,7 +85,6 @@ export const handler = async (event: any) => {
     
         selectedPackage.availableClasses = selectedPackage.availableClasses - 1;
         u.bookedClasses.push({pk: classInfo.month, sk: classInfo.date});
-        console.log('userAfterUpdate', u);
         updatedUsersCount++;
         userUpdateRequests.push(usersDB.updateItem(u.phoneNumber,
         {
@@ -103,8 +96,6 @@ export const handler = async (event: any) => {
     if(updatedUsersCount === 0) {
         return responseHelper("No se reservó para ningún usuario, clase ya agendada o no tienen clases a favor", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
-
-    console.log('classInfo.registeredUsers', classInfo.registeredUsers);
 
     await Promise.all([
         userUpdateRequests,

@@ -4,16 +4,26 @@
     "phoneNumber": "3313393021",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
-    "purchasedPackages": [{
-        "availableClasses": 1,
-        "expireDate": "2023-11-28T00:00:00",
-        "totalClasses": 4
-    },
-    {
-        "availableClasses": 1,
-        "expireDate": "2023-11-11T00:00:00",
-        "totalClasses": 1
-    }],
+    "purchasedPackages": [
+        {
+         "availableClasses": 0,
+         "expireDate": "2023-11-15T20:18:40.261Z",
+         "purchasedDate": "2023-11-08T20:18:40.261Z",
+         "totalClasses": 1
+        },
+        {
+         "availableClasses": 4,
+         "expireDate": "2023-11-18T22:52:56.437Z",
+         "purchasedDate": "2023-11-08T22:52:56.437Z",
+         "totalClasses": 4
+        },
+        {
+            "availableClasses": 2,
+            "expireDate": "2023-11-28T22:52:56.437Z",
+            "purchasedDate": "2023-11-08T22:52:56.437Z",
+            "totalClasses": 4
+           }
+       ],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
     "deleted": false,
     "whatsappNotifications": false

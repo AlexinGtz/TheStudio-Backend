@@ -20,7 +20,7 @@ export const handler = async (event) => {
     const passwordsMatch = await compare(password, user.password);
 
     if(!passwordsMatch) {
-        return responseHelper("Passwords doesn't  match", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Las contraseñas no coinciden", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const token = jwt.sign(
