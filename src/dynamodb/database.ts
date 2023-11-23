@@ -1,4 +1,4 @@
-import { BatchGetItemCommand, BatchWriteItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { BatchGetItemCommand, BatchWriteItemCommand, DeleteItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 
 export class CustomDynamoDB {
@@ -39,11 +39,26 @@ export class CustomDynamoDB {
     }
 
     async query(id, secondaryKeyVal?, sortComparison?, indexName?) {
-        const pkName = `#${this.primaryKey}`
+        const pkName = `#${indexName?.split('-')[0] ?? this.primaryKey}`
         const skName = `#${this.sortingKey}`
 
         let condition = `${pkName} = :pk`
-        if (this.sortingKey) {
+
+        const expressionValues = {
+            ":pk": {
+                S: id
+            },
+        }
+
+        const expressionNames = {
+            [pkName]: indexName?.split('-')[0] ?? this.primaryKey,
+        }
+
+        if (this.sortingKey && secondaryKeyVal) {
+            expressionValues[":sk"] = {
+                S: secondaryKeyVal
+            }
+            expressionNames[skName] = this.sortingKey;
             condition = condition.concat(` AND ${skName} ${sortComparison} :sk`);
         }
 
@@ -51,30 +66,22 @@ export class CustomDynamoDB {
             TableName: this.tableName,
             IndexName: indexName ?? undefined,
             KeyConditionExpression: condition,
-            ExpressionAttributeValues: {
-                ":pk": {
-                    S: id
-                },
-                ":sk": {
-                    S: secondaryKeyVal
-                }
-            },
-            ExpressionAttributeNames: {
-                [pkName]: this.primaryKey,
-                [skName]: this.sortingKey
-            }
-        })
+            ExpressionAttributeValues: expressionValues,
+            ExpressionAttributeNames: expressionNames,
+        });
 
-        const dbRes = await this.DB.send(options)
+        const dbRes = await this.DB.send(options);
 
         return (dbRes.Items.map(e => unmarshall(e)));
     }
 
     async putItem(item) {
+        console.log('item', item);
         const options = new PutItemCommand({
             TableName: this.tableName,
             Item: marshall(item),
         })
+        console.log('options', options);
         return this.DB.send(options);
     }
 
@@ -128,7 +135,7 @@ export class CustomDynamoDB {
             UpdateExpression: `SET ${updateExp.slice(0, updateExp.length - 1)}`,
             ExpressionAttributeValues,
             Key: key,
-            ReturnValues: 'NONE'
+            ReturnValues: 'NONE',
         });
 
         await this.DB.send(options);
@@ -177,5 +184,25 @@ export class CustomDynamoDB {
         }
 
         return Promise.all(callsToDB);
+    }
+
+    async deleteItem(pk, sk?) {
+        const options = new DeleteItemCommand({
+            TableName: this.tableName,
+            Key: {
+                [this.primaryKey]: {
+                    S: pk
+                },
+                ...(sk ? {
+                    [this.sortingKey]: {
+                        S: sk
+                    }
+                } : {})
+            }
+        });
+
+        console.log('options', options);
+
+        return this.DB.send(options);
     }
 }

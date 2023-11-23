@@ -32,7 +32,7 @@ export const handler = async (event: any) => {
         purchasedPackages: user.purchasedPackages,
         userType: user.userType,
         bookedClasses: user.bookedClasses,
-        whatsappNotifications: user.whatsappNotifications,
+        emailEnabled: user.emailEnabled,
         deleted: user.deleted,
     }));
 

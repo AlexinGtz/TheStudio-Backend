@@ -7,9 +7,18 @@ Resources:
         AttributeDefinitions:
           - AttributeName: "phoneNumber"
             AttributeType: "S"
+          - AttributeName: "email"
+            AttributeType: "S"
         KeySchema: 
           - AttributeName: "phoneNumber"
             KeyType: "HASH"
+        GlobalSecondaryIndexes:
+          - IndexName: email-index
+            KeySchema: 
+              - AttributeName: "email"
+                KeyType: "HASH"
+            Projection: 
+              ProjectionType: ALL
         Tags:
           - Key: Stage
             Value: ${self:provider.stage}
@@ -46,6 +55,29 @@ Resources:
         KeySchema: 
           - AttributeName: "id"
             KeyType: "HASH"
+        Tags:
+          - Key: Stage
+            Value: ${self:provider.stage}
+          - Key: Service
+            Value: ${self:service}
+  verificationCodesTable:
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:provider.stage}-${self:service}-verification-codes
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: "phoneNumber"
+            AttributeType: "S"
+          - AttributeName: "date"
+            AttributeType: "S"
+        KeySchema: 
+          - AttributeName: "phoneNumber"
+            KeyType: "HASH"
+          - AttributeName: "date"
+            KeyType: "RANGE"
+        TimeToLiveSpecification:
+          AttributeName: "ttl"
+          Enabled: true
         Tags:
           - Key: Stage
             Value: ${self:provider.stage}

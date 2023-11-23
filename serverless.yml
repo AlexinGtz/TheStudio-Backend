@@ -463,3 +463,69 @@ functions:
             path: /editPackageInfo
             method: post
             cors: true
+  ignoreMail:
+      name: ${self:custom.base}-ignoreMail
+      description: 'Allows the user to book a class'
+      handler: src/handlers/ignoreMail.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/ignoreMail.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /ignoreMail
+            method: post
+            cors: true
+  resetPasswordCode:
+      name: ${self:custom.base}-resetPasswordCode
+      description: 'Allows the user to book a class'
+      handler: src/handlers/resetPasswordCode.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/resetPasswordCode.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        CODES_TABLE: ${self:custom.environment.CODES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /resetPasswordCode
+            method: get
+            cors: true
+  resetPasswordConfirmation:
+      name: ${self:custom.base}-resetPasswordConfirmation
+      description: 'Allows the user to book a class'
+      handler: src/handlers/resetPasswordConfirmation.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/resetPasswordConfirmation.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        CODES_TABLE: ${self:custom.environment.CODES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /resetPasswordConfirmation
+            method: post
+            cors: true
+  

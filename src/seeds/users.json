@@ -1,6 +1,7 @@
 [{
     "firstName": "Alex",
     "lastName": "Gutierrez",
+    "email": "test.user1@test.com",
     "phoneNumber": "3313393021",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -26,11 +27,12 @@
        ],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Lucy",
     "lastName": "Garcia",
+    "email": "test.user2@test.com",
     "phoneNumber": "3313355405",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -41,11 +43,12 @@
     }],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Marcia",
     "lastName": "de la Fuente",
+    "email": "test.user3@test.com",
     "phoneNumber": "3313397232",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -56,11 +59,12 @@
     }],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Manuel",
     "lastName": "Gutierrez",
+    "email": "test.user4@test.com",
     "phoneNumber": "3313392031",
     "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -71,11 +75,12 @@
     }],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-22T00:00:00Z"}],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Felipe",
     "lastName": "Andaluz",
+    "email": "test.user5@test.com",
     "phoneNumber": "3313331333",
     "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -86,11 +91,12 @@
     }],
     "bookedClasses": [],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Pako",
     "lastName": "Fonseca",
+    "email": "test.user6@test.com",
     "phoneNumber": "3312221222",
     "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -101,11 +107,12 @@
     }],
     "bookedClasses": [],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Jahir",
     "lastName": "Silva",
+    "email": "test.user7@test.com",
     "phoneNumber": "9221342341",
     "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
@@ -116,23 +123,25 @@
     }],
     "bookedClasses": [],
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Alex",
     "lastName": "Gutierrez",
+    "email": "test.user8@test.com",
     "phoneNumber": "3312188843",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "admin",
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 },
 {
     "firstName": "Alex",
     "lastName": "Gutierrez",
+    "email": "test.user9@test.com",
     "phoneNumber": "3313397233",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "dev",
     "deleted": false,
-    "whatsappNotifications": false
+    "emailEnabled": true
 }]

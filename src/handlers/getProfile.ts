@@ -26,6 +26,6 @@ export const handler = async (event: any) => {
         purchasedPackages: userData.purchasedPackages,
         userType: userData.userType,
         bookedClasses: userData.bookedClasses,
-        whatsappNotifications: userData.whatsappNotifications
+        emailEnabled: userData.emailEnabled
     });
 }
