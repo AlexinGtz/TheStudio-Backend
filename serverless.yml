@@ -3,7 +3,7 @@ service: the-studio
 configValidationMode: error
 
 plugins: 
-  - serverless-plugin-typescript
+  - serverless-esbuild
   - serverless-offline
   - serverless-dynamodb
   - serverless-s3-local
@@ -40,6 +40,10 @@ provider:
           Action: 
             - s3:GetObject
             - s3:PutObject
+          Resource: '*'
+        - Effect: Allow
+          Action: 
+            - ses:SendRawEmail
           Resource: '*'
   apiGateway:
     restApiId: !Ref MainApi
@@ -79,28 +83,16 @@ custom:
     region: us-east-2
     directory: ./.bucket
     port: 3005
+  esbuild:
+    bundle: true
+    minify: true
+    exclude: ['aws-sdk']
+    target: node18
+    concurrency: 10
+    watch:
+      pattern: ['src/**/*.ts']
 
 functions:
-  registerUser:
-      name: ${self:custom.base}-registerUser
-      description: 'Registers a new user'
-      handler: src/handlers/register.handler
-      timeout: 30
-      memorySize: 264
-      package:
-        patterns:
-          - '!src/**'
-          - 'src/handlers/register.*'
-          - 'src/constants.*'
-          - 'src/dynamodb/*'
-          - 'src/helpers/**/*'
-      environment:
-        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
-      events:
-        - http:
-            path: /register
-            method: post
-            cors: true
   login:
       name: ${self:custom.base}-login
       description: 'Logs a user into the app'
@@ -120,6 +112,26 @@ functions:
       events:
         - http:
             path: /login
+            method: post
+            cors: true
+  registerUser:
+      name: ${self:custom.base}-registerUser
+      description: 'Registers a new user'
+      handler: src/aws/../handlers/registerUser.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/registerUser.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+      events:
+        - http:
+            path: /register
             method: post
             cors: true
   bookClass:

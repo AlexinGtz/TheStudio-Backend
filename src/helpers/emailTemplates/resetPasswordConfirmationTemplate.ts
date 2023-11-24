@@ -4,7 +4,7 @@ type resetPasswordConfirmationOptions = {
 }
 
 export default (opt: resetPasswordConfirmationOptions) => ({
-    from: '"The Studio" <contacto@thestudioapp.com>',
+    from: '"The Studio" <j.alex1410@hotmail.com>',
     to: opt.email,
     subject: "Contraseña restaurada",
     text: 'Tu contraseña ha cambiado exitosamente. Ingresa a la aplicación con tu número telefónico y la siguiente contraseña: ' + opt.newPassword + '. No se te olvide cambiarla por una que conozcas',

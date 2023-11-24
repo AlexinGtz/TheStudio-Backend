@@ -76,12 +76,10 @@ export class CustomDynamoDB {
     }
 
     async putItem(item) {
-        console.log('item', item);
         const options = new PutItemCommand({
             TableName: this.tableName,
             Item: marshall(item),
         })
-        console.log('options', options);
         return this.DB.send(options);
     }
 
@@ -201,7 +199,6 @@ export class CustomDynamoDB {
             }
         });
 
-        console.log('options', options);
 
         return this.DB.send(options);
     }

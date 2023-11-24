@@ -11,7 +11,6 @@ const generateCode = () => {
     const codeLength = 6;
     const characters = '0123456789';
     let code = '';
-
     for (let i = 0; i < codeLength; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         code += characters[randomIndex];
@@ -43,7 +42,7 @@ export const handler = async (event: any) => {
     }
 
     try {
-        await sendMail(resetPasswordCodeTemplate({ code, email: userData.email }));
+        await sendMail(resetPasswordCodeTemplate({ code, email: 'j.alex1410@hotmail.com' }));
     } catch (error) {
         console.log('SEND MAIL ERROR', error);
         return responseHelper("Error mandando correo, intente de nuevo mas tarde", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);

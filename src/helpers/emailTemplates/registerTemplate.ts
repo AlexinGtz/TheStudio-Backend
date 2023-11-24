@@ -3,7 +3,7 @@ type registerTemplateOptions = {
 }
 
 export default (opt: registerTemplateOptions) => ({
-    from: '"The Studio" <contacto@thestudioapp.com>',
+    from: '"The Studio" <j.alex1410@hotmail.com>',
     to: opt.email,
     subject: "Registro exitoso",
     text: 'Bienvenido a The Studio',

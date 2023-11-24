@@ -4,7 +4,7 @@ type resetPasswordCodeOptions = {
 }
 
 export default (opt: resetPasswordCodeOptions) => ({
-    from: '"The Studio" <contacto@thestudioapp.com>',
+    from: '"The Studio" <j.alex1410@hotmail.com>',
     to: opt.email,
     subject: "Código de verificación",
     text: 'Tu código de verificación es: ' + opt.code,
