@@ -7,7 +7,7 @@ import { validateToken } from "../helpers/validateToken";
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event: any) => {
-    const { currentPassword, newPassword } = JSON.parse(event.body);
+    const { newPassword } = JSON.parse(event.body);
 
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
@@ -19,13 +19,7 @@ export const handler = async (event: any) => {
     if(!userData) {
         return responseHelper("User data not found", undefined, HTTP_ERROR_CODES.NOT_FOUND)
     }
-   
-    const passwordsMatch = await compare(currentPassword, userData.password);
 
-    if(!passwordsMatch) {
-        return responseHelper("Tu contraseña actual no es la correcta", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
-    }
-    
     const encpriptedPasswrod = await hash(newPassword, 10);
     userData.password = encpriptedPasswrod;
     

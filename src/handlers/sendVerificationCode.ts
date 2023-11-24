@@ -5,7 +5,7 @@ import { sendMail } from "../helpers/emailHelper";
 import resetPasswordCodeTemplate from "../helpers/emailTemplates/resetPasswordCodeTemplate";
 
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
-const codesDB = new CustomDynamoDB(process.env.CODES_TABLE!, 'phoneNumber', 'date');
+const codesDB = new CustomDynamoDB(process.env.CODES_TABLE!, 'phoneNumber');
 
 const generateCode = () => {
     const codeLength = 6;
@@ -34,7 +34,6 @@ export const handler = async (event: any) => {
 
     const res = await codesDB.putItem({
         phoneNumber,
-        date: new Date().toISOString(),
         code,
         ttl
     });
@@ -47,7 +46,7 @@ export const handler = async (event: any) => {
         await sendMail(resetPasswordCodeTemplate({ code, email: userData.email }));
     } catch (error) {
         console.log('SEND MAIL ERROR', error);
-        return responseHelper("Error sending mail", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
+        return responseHelper("Error mandando correo, intente de nuevo mas tarde", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
     return responseHelper("Success");

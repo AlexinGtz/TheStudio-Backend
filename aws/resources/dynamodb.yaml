@@ -68,13 +68,9 @@ Resources:
         AttributeDefinitions:
           - AttributeName: "phoneNumber"
             AttributeType: "S"
-          - AttributeName: "date"
-            AttributeType: "S"
         KeySchema: 
           - AttributeName: "phoneNumber"
             KeyType: "HASH"
-          - AttributeName: "date"
-            KeyType: "RANGE"
         TimeToLiveSpecification:
           AttributeName: "ttl"
           Enabled: true

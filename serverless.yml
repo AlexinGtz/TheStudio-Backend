@@ -484,16 +484,16 @@ functions:
             path: /ignoreMail
             method: post
             cors: true
-  resetPasswordCode:
-      name: ${self:custom.base}-resetPasswordCode
+  sendVerificationCode:
+      name: ${self:custom.base}-sendVerificationCode
       description: 'Allows the user to book a class'
-      handler: src/handlers/resetPasswordCode.handler
+      handler: src/handlers/sendVerificationCode.handler
       timeout: 30
       memorySize: 264
       package:
         patterns:
           - '!src/**'
-          - 'src/handlers/resetPasswordCode.*'
+          - 'src/handlers/sendVerificationCode.*'
           - 'src/constants.*'
           - 'src/dynamodb/*'
           - 'src/helpers/**/*'
@@ -503,29 +503,49 @@ functions:
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
       events:
         - http:
-            path: /resetPasswordCode
+            path: /sendVerificationCode
             method: get
             cors: true
-  resetPasswordConfirmation:
-      name: ${self:custom.base}-resetPasswordConfirmation
+  verifyCode:
+      name: ${self:custom.base}-verifyCode
       description: 'Allows the user to book a class'
-      handler: src/handlers/resetPasswordConfirmation.handler
+      handler: src/handlers/verifyCode.handler
       timeout: 30
       memorySize: 264
       package:
         patterns:
           - '!src/**'
-          - 'src/handlers/resetPasswordConfirmation.*'
+          - 'src/handlers/verifyCode.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        CODES_TABLE: ${self:custom.environment.CODES_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /verifyCode
+            method: post
+            cors: true
+  forgotPassword:
+      name: ${self:custom.base}-forgotPassword
+      description: 'Allows the user to book a class'
+      handler: src/handlers/forgotPassword.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/forgotPassword.*'
           - 'src/constants.*'
           - 'src/dynamodb/*'
           - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
-        CODES_TABLE: ${self:custom.environment.CODES_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
       events:
         - http:
-            path: /resetPasswordConfirmation
+            path: /forgotPassword
             method: post
             cors: true
   
