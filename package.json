@@ -7,11 +7,12 @@
     "start": "serverless offline start --stage local --region us-east-2 --reloadHandler --noPrependStageInUrl",
     "ddb": "set DYNAMO_ENDPOINT=http://localhost:4000 && dynamodb-admin",
     "deployfn": "serverless deploy function --stage qa --region us-east-2",
-    "deploy": "serverless deploy --stage qa --region us-east-2",
+    "deploy": "serverless deploy --stage qa --region us-east-2 -p ./package",
     "package": "serverless package --stage qa --region us-east-2 -p ./package",
     "package-prod": "serverless package --stage prod --region us-east-2 -p ./package",
     "deploy-prod": "serverless deploy --stage prod --region us-east-2 -p ./package",
-    "build": "esbuild src/**/* --bundle --platform=node --target=node18 --outdir=dist/"
+    "release-qa": "npm run package && npm run deploy",
+    "release": "npm run package-prod && npm run deploy-prod"
   },
   "author": "Alex Gutierrez",
   "license": "ISC",
