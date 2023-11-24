@@ -20,7 +20,7 @@ export default (opt: resetPasswordConfirmationOptions) => ({
             <br />
             <br />
             <p style="font-size: smaller;">No contestar este correo, fue enviado de manera automatica</p>
-            <p style="font-size: smaller;">Si ya no quieres recibir correos haz click <a href="https://sgct180v33.execute-api.us-east-1.amazonaws.com/qa/ignoreMail?email=${opt.email}">aqui</a></p>
+            <p style="font-size: smaller;">Si ya no quieres recibir correos haz click <a href="https://sgct180v33.execute-api.us-east-2.amazonaws.com/qa/ignoreMail?email=${opt.email}">aqui</a></p>
         </div>
     `
 }) 

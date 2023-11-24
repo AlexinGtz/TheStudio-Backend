@@ -17,7 +17,7 @@ package:
 provider: 
   name: aws
   runtime: nodejs18.x
-  region: ${opt:region, "us-east-1"}
+  region: ${opt:region, "us-east-2"}
   stage: ${opt:stage, "local"}
   timeout: 30
   environment:
@@ -76,7 +76,7 @@ custom:
             sources: [./src/seeds/packages.json]
   s3:
     host: localhost
-    region: us-east-1
+    region: us-east-2
     directory: ./.bucket
     port: 3005
 
