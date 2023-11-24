@@ -7,8 +7,6 @@ plugins:
   - serverless-offline
   - serverless-dynamodb
   - serverless-s3-local
-  - serverless-plugin-common-excludes
-  - serverless-plugin-include-dependencies
 
 package:
   excludeDevDependencies: false
@@ -117,7 +115,7 @@ functions:
   registerUser:
       name: ${self:custom.base}-registerUser
       description: 'Registers a new user'
-      handler: src/aws/../handlers/registerUser.handler
+      handler: src/handlers/registerUser.handler
       timeout: 30
       memorySize: 264
       package:

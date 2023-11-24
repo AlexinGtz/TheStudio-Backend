@@ -39,10 +39,12 @@ export const handler = async (event) => {
         purchasedPackages: []
     });
 
-    //Send Whatsapp
-    await sendMail(registerTemplate({
-        email,
-    }));
-
+    try {
+        await sendMail(registerTemplate({
+            email,
+        }));
+    }	catch (error) {
+        console.log(error);
+    }
     return responseHelper('Successfully created profile');
 }

@@ -6,24 +6,22 @@
   "scripts": {
     "start": "serverless offline start --stage local --region us-east-2 --reloadHandler --noPrependStageInUrl",
     "ddb": "set DYNAMO_ENDPOINT=http://localhost:4000 && dynamodb-admin",
-    "deploy": "serverless deploy --stage qa --region us-east-2 -p ./package",
-    "deploy-prod": "serverless deploy --stage prod --region us-east-2 -p ./package",
     "deployfn": "serverless deploy function --stage qa --region us-east-2",
+    "deploy": "serverless deploy --stage qa --region us-east-2",
     "package": "serverless package --stage qa --region us-east-2 -p ./package",
     "package-prod": "serverless package --stage prod --region us-east-2 -p ./package",
+    "deploy-prod": "serverless deploy --stage prod --region us-east-2 -p ./package",
     "build": "esbuild src/**/* --bundle --platform=node --target=node18 --outdir=dist/"
   },
   "author": "Alex Gutierrez",
   "license": "ISC",
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.3",
-    "esbuild": "^0.14.11",
+    "esbuild": "^0.19.7",
     "serverless": "^3.36.0",
     "serverless-dynamodb": "^0.2.43",
-    "serverless-esbuild": "^1.23.3",
+    "serverless-esbuild": "^1.49.0",
     "serverless-offline": "^13.2.0",
-    "serverless-plugin-common-excludes": "^4.0.0",
-    "serverless-plugin-include-dependencies": "^5.0.0",
     "serverless-s3-local": "^0.8.1"
   },
   "dependencies": {
