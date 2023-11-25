@@ -17,7 +17,7 @@ export default (opt: resetPasswordCodeOptions) => ({
         <p style="font-size: smaller; width: 70%; margin: 0.5rem 0;">Éste código será válido sólo por 1 hora</p>
         <br />
         <p style="font-size: x-small; margin: 0;">No contestar este correo, fue enviado de manera automatica</p>
-        <p style="font-size: x-small; margin: 0;">Si ya no quieres recibir correos electrónicos haz click <a href="https://qa-api.thestudioapp.com/ignoreMail?email=${opt.email}" target="_blank">aqui</a></p>
+        <p style="font-size: x-small; margin: 0;">Si ya no quieres recibir correos electrónicos haz click <a href="https://${process.env.STAGE}-api.thestudioapp.com/ignoreMail?email=${opt.email}" target="_blank">aqui</a></p>
     </div>
     `
 }) 
