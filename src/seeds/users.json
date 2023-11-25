@@ -66,13 +66,22 @@
     "lastName": "Gutierrez",
     "email": "test.user4@test.com",
     "phoneNumber": "3313392031",
-    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
-    "purchasedPackages": [{
-        "availableClasses": 0,
-        "expireDate": "2023-11-18T00:00:00",
-        "totalClasses": 4
-    }],
+    "purchasedPackages": [
+        {
+         "availableClasses": 4,
+         "expireDate": "2023-12-04T19:14:03.744Z",
+         "purchasedDate": "2023-11-24T19:14:03.744Z",
+         "totalClasses": 4
+        },
+        {
+         "availableClasses": 1,
+         "expireDate": "2023-12-01T19:14:14.104Z",
+         "purchasedDate": "2023-11-24T19:14:14.104Z",
+         "totalClasses": "1"
+        }
+       ],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-22T00:00:00Z"}],
     "deleted": false,
     "emailEnabled": true
@@ -82,7 +91,7 @@
     "lastName": "Andaluz",
     "email": "test.user5@test.com",
     "phoneNumber": "3313331333",
-    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 1,
@@ -98,7 +107,7 @@
     "lastName": "Fonseca",
     "email": "test.user6@test.com",
     "phoneNumber": "3312221222",
-    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 1,
@@ -114,7 +123,7 @@
     "lastName": "Silva",
     "email": "test.user7@test.com",
     "phoneNumber": "9221342341",
-    "password": "$2b$11$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
+    "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
     "purchasedPackages": [{
         "availableClasses": 1,

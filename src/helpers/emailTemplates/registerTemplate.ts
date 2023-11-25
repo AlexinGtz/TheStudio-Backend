@@ -8,17 +8,14 @@ export default (opt: registerTemplateOptions) => ({
     subject: "Registro exitoso",
     text: 'Bienvenido a The Studio',
     html: `
-        <div>
-            <h1>Bienvenido a The Studio</h1>
-
-            <p>Tu perfil ha sido creado. Esperemos disfrutes de las clases en The Studio</p>
-            <p>Usa la app para reservar tu primera clase. ¡Te esperamos!</p>
-
-            <br />
-            <br />
-
-            <p style="font-size: smaller;">No contestar este correo, fue enviado de manera automatica</p>
-            <p style="font-size: smaller;">Si ya no quieres recibir correos haz click <a href="https://sgct180v33.execute-api.us-east-2.amazonaws.com/qa/ignoreMail?email=${opt.email}">aqui</a></p>
-        </div>
+    <div style="background-color: #F5F5F5; width: 500px; display: flex; align-items: center; flex-direction: column;">
+        <h1>Bienvenido a <p style="color: #CBB6A2; display: inline;">The Studio</p></h1>
+        <p style="font-size: large; width: 70%; margin: 0.5rem 0;">Tu perfil ha sido creado. Esperemos disfrutes del pilates en <b><i>The Studio</i></b></p>
+        <p style="font-size: large; width: 70%; margin: 0.5rem 0;">Usa la <a href="https://qa.thestudioapp.com" target="_blank"><b>aplicación</b></a> para reservar tu primera clase. <b>¡Te esperamos!</b></p>
+        <p style="font-size: large; width: 70%; margin: 0.5rem 0;">Inicia sesión con tu número telefónico y la contraseña con la que te registraste</p>
+        <br />
+        <p style="font-size: smaller; margin: 0;">No contestar este correo, fue enviado de manera automatica</p>
+        <p style="font-size: smaller; margin: 0;">Si ya no quieres recibir correos haz click <a href="https://qa-api.thestudioapp.com/ignoreMail?email=${opt.email}" target="_blank">aqui</a></p>
+    </div>
     `
 }) 
