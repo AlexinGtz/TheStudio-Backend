@@ -25,7 +25,7 @@ export const handler = async (event: any) => {
     const userData = await usersDB.getItem(phoneNumber);
 
     if(!userData) {
-        return responseHelper("User data not found", undefined, HTTP_ERROR_CODES.NOT_FOUND)
+        return responseHelper("Datos del usuario no encontrados", undefined, HTTP_ERROR_CODES.NOT_FOUND)
     }
 
     const ttl = Date.now() + 1000 * 3600; //1 hour
@@ -38,7 +38,7 @@ export const handler = async (event: any) => {
     });
 
     if(!res) {
-        return responseHelper("Error saving code", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
+        return responseHelper("Error guardando el código en la BD", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
     try {

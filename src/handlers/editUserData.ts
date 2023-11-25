@@ -8,7 +8,7 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const { firstName, lastName } = JSON.parse(event.body);
@@ -16,7 +16,7 @@ export const handler = async (event: any) => {
     const userData = await usersDB.getItem(tokenData.phoneNumber);
     
     if(!userData) {
-        return responseHelper("User data not found", undefined, HTTP_ERROR_CODES.NOT_FOUND)
+        return responseHelper("Datos del usuario no encontrados", undefined, HTTP_ERROR_CODES.NOT_FOUND)
     }
 
     userData.firstName = firstName ?? userData.firstName;
@@ -29,9 +29,9 @@ export const handler = async (event: any) => {
             lastName: userData.lastName,
         });
     } catch (error) {
-        return responseHelper("Error updating user information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
+        return responseHelper("Error actualizando la información", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
 
-    return responseHelper("Success");
+    return responseHelper("Datos actualizados correctamente");
 }

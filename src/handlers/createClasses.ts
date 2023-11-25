@@ -73,11 +73,11 @@ const days = {
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(tokenData.userType !== USER_TYPES.DEV) {
-        return responseHelper('User action forbidden', undefined, HTTP_ERROR_CODES.FORBIDDEN);
+        return responseHelper('Acción prohivida para el usuario', undefined, HTTP_ERROR_CODES.FORBIDDEN);
     }
 
     const body = JSON.parse(event.body);
@@ -97,7 +97,7 @@ export const handler = async (event: any) => {
             itemsToInsert.push({
                 month: month,
                 date: newDay.toISOString(),
-                instructor: "Maria",
+                instructor: "Maria Suarez",
                 registeredUsers: [],
                 maxUsers: 6,
                 cancelled: false
@@ -112,5 +112,5 @@ export const handler = async (event: any) => {
  
     await classesDB.batchWriteItems(itemsToInsert);
 
-    return responseHelper("Succesfully created classes for the month")
+    return responseHelper("Clases para el mes creadas exitosamente")
 }

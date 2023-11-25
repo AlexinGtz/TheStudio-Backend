@@ -492,7 +492,7 @@ functions:
       events:
         - http:
             path: /ignoreMail
-            method: post
+            method: get
             cors: true
   sendVerificationCode:
       name: ${self:custom.base}-sendVerificationCode

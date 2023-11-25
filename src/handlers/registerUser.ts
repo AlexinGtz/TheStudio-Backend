@@ -21,7 +21,7 @@ export const handler = async (event) => {
     const existingUser = await database.getItem(phoneNumber);
 
     if(existingUser) {
-        return responseHelper("User already in DB", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Usuario ya registrado", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const encriptedPassword = await hash(password, 10);
@@ -46,5 +46,5 @@ export const handler = async (event) => {
     }	catch (error) {
         console.log(error);
     }
-    return responseHelper('Successfully created profile');
+    return responseHelper('Perfil creado satisfactoriamente');
 }

@@ -10,11 +10,11 @@ const packagesDB = new CustomDynamoDB(process.env.PACKAGES_TABLE!, 'id');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(tokenData.userType !== USER_TYPES.ADMIN) {
-        return responseHelper("Action forbidden", undefined, HTTP_ERROR_CODES.FORBIDDEN);
+        return responseHelper("Sólo los admins pueden hacer esta acción", undefined, HTTP_ERROR_CODES.FORBIDDEN);
     }
 
     const body = JSON.parse(event.body);
@@ -28,7 +28,7 @@ export const handler = async (event: any) => {
 
     if(!userInfo || !packageInfo) {
         return responseHelper(
-            "Data not found for user or package", 
+            "Datos no encontrados", 
             undefined, 
             HTTP_ERROR_CODES.NOT_FOUND);
     }
@@ -46,5 +46,5 @@ export const handler = async (event: any) => {
 
     await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo.purchasedPackages})
     
-    return responseHelper("Succesfully added package to user");
+    return responseHelper("Paquete añadido al usuario");
 }

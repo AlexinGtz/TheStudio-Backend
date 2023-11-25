@@ -9,7 +9,7 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const today = new Date();
@@ -24,11 +24,11 @@ export const handler = async (event: any) => {
     ]);
 
     if(!userInfo || !classInfo) {
-        return responseHelper("Error retrieving user or class information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
+        return responseHelper("Error buscando los datos en la BD", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     if(classInfo.cancelled) {
-        return responseHelper("Class already cancelled", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("La clase ya ha sido cancelada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if( (userInfo.userType === USER_TYPES.ADMIN && userId)
@@ -38,13 +38,13 @@ export const handler = async (event: any) => {
             await usersDB.getItem(userId) : userInfo; 
         
         if (!user) {
-            return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
+            return responseHelper("Error trayendo los datos del usuario de la BD", undefined, HTTP_ERROR_CODES.NOT_FOUND);
         }
 
         const regUser = classInfo.registeredUsers.find(e => e.phoneNumber === user.phoneNumber);
         if(!regUser) {
             return responseHelper(
-                "Cannot cancel class because the user is not registered", 
+                "No se puede cancelar la clase porque el usuario no está registrado", 
                 undefined, 
                 HTTP_ERROR_CODES.BAD_REQUEST);
         }
@@ -73,11 +73,11 @@ export const handler = async (event: any) => {
             classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
         ])
 
-        return responseHelper('Succesfully cancelled class');
+        return responseHelper('Clase cancelada satisfactoriamente');
 
     } else {
         await classesDB.updateItem(classInfo.month,{cancelled: true}, classInfo.date)
-        if(classInfo.registeredUsers.length === 0) return responseHelper('Succesfully cancelled class');
+        if(classInfo.registeredUsers.length === 0) return responseHelper('Clase cancelada satisfactoriamente');
         const users = await usersDB.batchGetById(classInfo.registeredUsers.map(user => ({
             pk: user.phoneNumber
         })));
@@ -93,6 +93,6 @@ export const handler = async (event: any) => {
 
         await Promise.all(users.map(user => usersDB.updateItem(user.phoneNumber, {purchasedPackages: user.purchasedPackages} )))
 
-        return responseHelper('Succesfully cancelled class');
+        return responseHelper('Clase cancelada satisfactoriamente');
     }
 }

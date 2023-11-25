@@ -8,7 +8,7 @@ const packagesDB = new CustomDynamoDB(process.env.PACKAGES_TABLE!, 'id');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const packagesData = await packagesDB.scan();

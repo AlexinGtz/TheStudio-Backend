@@ -10,7 +10,7 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de Usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const { classDate, users } = JSON.parse(event.body);
@@ -28,7 +28,7 @@ export const handler = async (event: any) => {
     const userInfo = await usersDB.getItem(tokenData.phoneNumber);
 
     if(!userInfo) {
-        return responseHelper("Error retrieving user information", undefined, HTTP_ERROR_CODES.NOT_FOUND);
+        return responseHelper("Error buscando los datos del usuario", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
     if(userInfo.userType === USER_TYPES.ADMIN && !users) {
@@ -102,5 +102,5 @@ export const handler = async (event: any) => {
         classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
     ])
 
-    return responseHelper("Succesfully booked class");
+    return responseHelper("Clase agendada exitosamente");
 }

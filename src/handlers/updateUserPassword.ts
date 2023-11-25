@@ -11,13 +11,13 @@ export const handler = async (event: any) => {
 
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const userData = await usersDB.getItem(tokenData.phoneNumber);
     
     if(!userData) {
-        return responseHelper("User data not found", undefined, HTTP_ERROR_CODES.NOT_FOUND)
+        return responseHelper("Datos del usuario no encontrados", undefined, HTTP_ERROR_CODES.NOT_FOUND)
     }
    
     const passwordsMatch = await compare(currentPassword, userData.password);
@@ -34,7 +34,7 @@ export const handler = async (event: any) => {
             password: userData.password
         });
     } catch (error) {
-        return responseHelper("Error updating user information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
+        return responseHelper("Error actualizando la informasión del usuario", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
     return responseHelper("Success");

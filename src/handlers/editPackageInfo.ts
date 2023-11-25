@@ -8,7 +8,7 @@ const packagesDB = new CustomDynamoDB(process.env.PACKAGES_TABLE!, 'id');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(tokenData.userType !== USER_TYPES.ADMIN) {
@@ -24,8 +24,8 @@ export const handler = async (event: any) => {
     try {
         await packagesDB.updateItem(packageInfo.id, newPackageInfo);
     } catch (error) {
-        return responseHelper("Error updating package information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
+        return responseHelper("Error actualizando la infoermación del paquete", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
-    return responseHelper("Success");
+    return responseHelper("Paque actualizado correctamente");
 }

@@ -8,7 +8,7 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("User token not valid", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
     
     if(tokenData.userType !== 'admin') {
@@ -22,8 +22,8 @@ export const handler = async (event: any) => {
             deleted: true
         });
     } catch (error) {
-        return responseHelper("Error updating user information", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
+        return responseHelper("Error actualizando la información", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);
     }
 
-    return responseHelper("Success");
+    return responseHelper("Usuario eliminado exitosamente");
 }
