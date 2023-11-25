@@ -11,8 +11,9 @@
     "package": "serverless package --stage qa --region us-east-2 -p ./package",
     "package-prod": "serverless package --stage prod --region us-east-2 -p ./package",
     "deploy-prod": "serverless deploy --stage prod --region us-east-2 -p ./package",
-    "release-qa": "npm run package && npm run deploy",
-    "release": "npm run package-prod && npm run deploy-prod"
+    "remove-package": "rm ./package -rf",
+    "release-qa": "npm run package && npm run deploy && npm run remove-package",
+    "release": "npm run package-prod && npm run deploy-prod && npm run remove-package"
   },
   "author": "Alex Gutierrez",
   "license": "ISC",
