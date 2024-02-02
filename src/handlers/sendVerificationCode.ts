@@ -28,7 +28,7 @@ export const handler = async (event: any) => {
         return responseHelper("Datos del usuario no encontrados", undefined, HTTP_ERROR_CODES.NOT_FOUND)
     }
 
-    const ttl = Date.now() + 1000 * 3600; //1 hour
+    const ttl = (Date.now() + (1000 * 3600)) / 1000; //1 hour
     const code = generateCode();
 
     const res = await codesDB.putItem({
@@ -42,7 +42,7 @@ export const handler = async (event: any) => {
     }
 
     try {
-        await sendMail(resetPasswordCodeTemplate({ code, email: 'j.alex1410@hotmail.com' }));
+        await sendMail(resetPasswordCodeTemplate({ code, email: userData.email }));
     } catch (error) {
         console.log('SEND MAIL ERROR', error);
         return responseHelper("Error mandando correo, intente de nuevo mas tarde", undefined, HTTP_ERROR_CODES.INTERNAL_SERVER_ERROR);

@@ -8,7 +8,7 @@ const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date'
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const { classDate } = event.queryStringParameters;

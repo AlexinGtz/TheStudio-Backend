@@ -4,7 +4,7 @@ type resetPasswordCodeOptions = {
 }
 
 export default (opt: resetPasswordCodeOptions) => ({
-    from: '"The Studio" <j.alex1410@hotmail.com>',
+    from: '"The Studio" <marianassilvar18@gmail.com>',
     to: opt.email,
     subject: "Código de verificación",
     text: 'Tu código de verificación es: ' + opt.code,
@@ -16,7 +16,7 @@ export default (opt: resetPasswordCodeOptions) => ({
         <p style="font-size: large; width: 70%; margin: 0.5rem 0;">Ingrésalo en la página web para restaurar tu contraseña</p>
         <p style="font-size: smaller; width: 70%; margin: 0.5rem 0;">Éste código será válido sólo por 1 hora</p>
         <br />
-        <p style="font-size: x-small; margin: 0;">No contestar este correo, fue enviado de manera automatica</p>
+        <p style="font-size: x-small; margin: 0;">Favor de no contestar este correo, fue enviado de manera automatica</p>
         <p style="font-size: x-small; margin: 0;">Si ya no quieres recibir correos electrónicos haz click <a href="https://${process.env.STAGE}-api.thestudioapp.com/ignoreMail?email=${opt.email}" target="_blank">aqui</a></p>
     </div>
     `

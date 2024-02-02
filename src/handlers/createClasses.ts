@@ -8,65 +8,232 @@ const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date'
 const days = {
     0: [],
     1: [
-        6,
-        7,
-        8,
-        9,
-        10,
-        17,
-        18,
-        19,
-        20,
+        {
+            time: 6,
+            teacher: ''
+        },
+        {
+            time: 7,
+            teacher: ''
+        },
+        {
+            time: 8,
+            teacher: ''
+        },
+        {
+            time: 9,
+            teacher: ''
+        },
+        {
+            time: 10,
+            teacher: ''
+        },
+        {
+            time: 16,
+            teacher: ''
+        },
+        {
+            time: 17,
+            teacher: ''
+        },
+        {
+            time: 18,
+            teacher: ''
+        },
+        {
+            time: 19,
+            teacher: ''
+        },
+        {
+            time: 20,
+            teacher: ''
+        },
     ],
     2: [
-        7,
-        8,
-        9,
-        10,
-        11,
-        17,
-        18,
-        19,
-        20,
+        {
+            time: 6,
+            teacher: ''
+        },
+        {
+            time: 7,
+            teacher: ''
+        },
+        {
+            time: 8,
+            teacher: ''
+        },
+        {
+            time: 9,
+            teacher: ''
+        },
+        {
+            time: 10,
+            teacher: ''
+        },
+        {
+            time: 16,
+            teacher: ''
+        },
+        {
+            time: 17,
+            teacher: ''
+        },
+        {
+            time: 18,
+            teacher: ''
+        },
+        {
+            time: 19,
+            teacher: ''
+        },
+        {
+            time: 20,
+            teacher: ''
+        },
     ],
     3: [
-        6,
-        7,
-        8,
-        9,
-        10,
-        17,
-        18,
-        19,
-        20,
+        {
+            time: 6,
+            teacher: ''
+        },
+        {
+            time: 7,
+            teacher: ''
+        },
+        {
+            time: 8,
+            teacher: ''
+        },
+        {
+            time: 9,
+            teacher: ''
+        },
+        {
+            time: 10,
+            teacher: ''
+        },
+        {
+            time: 16,
+            teacher: ''
+        },
+        {
+            time: 17,
+            teacher: ''
+        },
+        {
+            time: 18,
+            teacher: ''
+        },
+        {
+            time: 19,
+            teacher: ''
+        },
+        {
+            time: 20,
+            teacher: ''
+        },
     ],
     4: [
-        7,
-        8,
-        9,
-        10,
-        11,
-        17,
-        18,
-        19,
-        20,
+        {
+            time: 6,
+            teacher: ''
+        },
+        {
+            time: 7,
+            teacher: ''
+        },
+        {
+            time: 8,
+            teacher: ''
+        },
+        {
+            time: 9,
+            teacher: ''
+        },
+        {
+            time: 10,
+            teacher: ''
+        },
+        {
+            time: 16,
+            teacher: ''
+        },
+        {
+            time: 17,
+            teacher: ''
+        },
+        {
+            time: 18,
+            teacher: ''
+        },
+        {
+            time: 19,
+            teacher: ''
+        },
+        {
+            time: 20,
+            teacher: ''
+        },
     ],
     5: [
-        6,
-        7,
-        8,
-        9,
-        10,
-        17,
-        18,
-        19,
-        20,
+        {
+            time: 6,
+            teacher: ''
+        },
+        {
+            time: 7,
+            teacher: ''
+        },
+        {
+            time: 8,
+            teacher: ''
+        },
+        {
+            time: 9,
+            teacher: ''
+        },
+        {
+            time: 10,
+            teacher: ''
+        },
+        {
+            time: 16,
+            teacher: ''
+        },
+        {
+            time: 17,
+            teacher: ''
+        },
+        {
+            time: 18,
+            teacher: ''
+        },
+        {
+            time: 19,
+            teacher: ''
+        },
+        {
+            time: 20,
+            teacher: ''
+        },
     ],
     6: [
-        8,
-        9,
-        10,
-        11,
+        {
+            time: 8,
+            teacher: ''
+        },
+        {
+            time: 9,
+            teacher: ''
+        },
+        {
+            time: 10,
+            teacher: ''
+        },
+        {
+            time: 11,
+            teacher: ''
+        },
     ]
 }
 
@@ -91,13 +258,13 @@ export const handler = async (event: any) => {
     do {
         const dayToSchedule = days[startDay.getDay()];
 
-        for (let hour of dayToSchedule) {
+        for (let obj of dayToSchedule) {
             let newDay = new Date(startDay.getTime());
-            newDay.setHours(startDay.getHours() + hour);
+            newDay.setHours(startDay.getHours() + obj.time);
             itemsToInsert.push({
-                month: month,
+                month: parseInt(month).toString(),
                 date: newDay.toISOString(),
-                instructor: "Maria Suarez",
+                instructor: obj.teacher,
                 registeredUsers: [],
                 maxUsers: 6,
                 cancelled: false
@@ -105,7 +272,7 @@ export const handler = async (event: any) => {
         }
 
         startDay.setTime(startDay.getTime() + msInADay)
-        if ((startDay.getMonth() + 1).toString() !== month) {
+        if (startDay.getMonth() + 1 !== parseInt(month)) {
             exit = true;
         }
     } while (!exit)

@@ -3,7 +3,7 @@ type registerTemplateOptions = {
 }
 
 export default (opt: registerTemplateOptions) => ({
-    from: '"The Studio" <j.alex1410@hotmail.com>',
+    from: '"The Studio" <marianassilvar18@gmail.com>',
     to: opt.email,
     subject: "Registro exitoso",
     text: 'Bienvenido a The Studio',
@@ -14,7 +14,7 @@ export default (opt: registerTemplateOptions) => ({
         <p style="font-size: large; width: 70%; margin: 0.5rem 0;">Usa la <a href="https://${process.env.STAGE !== 'prod' ? 'qa.' : ''}thestudioapp.com" target="_blank"><b>aplicación</b></a> para reservar tu primera clase. <b>¡Te esperamos!</b></p>
         <p style="font-size: large; width: 70%; margin: 0.5rem 0;">Inicia sesión con tu número telefónico y la contraseña con la que te registraste</p>
         <br />
-        <p style="font-size: smaller; margin: 0;">No contestar este correo, fue enviado de manera automatica</p>
+        <p style="font-size: smaller; margin: 0;">Favor de no contestar este correo, fue enviado de manera automatica</p>
         <p style="font-size: smaller; margin: 0;">Si ya no quieres recibir correos haz click <a href="https://${process.env.STAGE}-api.thestudioapp.com/ignoreMail?email=${opt.email}" target="_blank">aqui</a></p>
     </div>
     `

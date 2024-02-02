@@ -8,7 +8,7 @@ const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
     if(!tokenData) {
-        return responseHelper("Token de usuario no váildo", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const userData = await usersDB.getItem(tokenData.phoneNumber);
