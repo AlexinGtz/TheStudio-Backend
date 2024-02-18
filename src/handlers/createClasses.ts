@@ -29,10 +29,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 16,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -42,10 +38,6 @@ const days = {
         },
         {
             time: 19,
-            teacher: ''
-        },
-        {
-            time: 20,
             teacher: ''
         },
     ],
@@ -71,10 +63,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 16,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -84,10 +72,6 @@ const days = {
         },
         {
             time: 19,
-            teacher: ''
-        },
-        {
-            time: 20,
             teacher: ''
         },
     ],
@@ -113,10 +97,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 16,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -126,10 +106,6 @@ const days = {
         },
         {
             time: 19,
-            teacher: ''
-        },
-        {
-            time: 20,
             teacher: ''
         },
     ],
@@ -155,10 +131,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 16,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -168,10 +140,6 @@ const days = {
         },
         {
             time: 19,
-            teacher: ''
-        },
-        {
-            time: 20,
             teacher: ''
         },
     ],
@@ -197,10 +165,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 16,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -210,10 +174,6 @@ const days = {
         },
         {
             time: 19,
-            teacher: ''
-        },
-        {
-            time: 20,
             teacher: ''
         },
     ],
