@@ -17,7 +17,7 @@ export const handler = async (event: any) => {
 
     const { lastEvaluatedKey } = event.queryStringParameters ?? {};
 
-    const usersData = await usersDB.scan(50, lastEvaluatedKey);
+    const usersData = await usersDB.scan(undefined, lastEvaluatedKey);
 
     if(!usersData) {
         return responseHelper("Datos del usuario no encontrados", undefined, HTTP_ERROR_CODES.NOT_FOUND)

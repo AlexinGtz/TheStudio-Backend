@@ -38,6 +38,6 @@ export const handler = async (event) => {
         userType: user.userType,
         phoneNumber: user.phoneNumber,
         token,
-        expiresIn: 3600*24
+        expiresIn: 3600*24*7 //7 days
     })
 }
