@@ -13,11 +13,11 @@ export const handler = async (event: any) => {
         return responseHelper("Token de Usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const { classDate, users } = JSON.parse(event.body);
+    const { classDate, users, classMonth } = JSON.parse(event.body);
 
     const today = new Date();
 
-    if(!classDate) {
+    if(!classDate || !classMonth) {
         return responseHelper("No se mando la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
@@ -50,7 +50,7 @@ export const handler = async (event: any) => {
         return responseHelper("Esta clase ya esta reservada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const classInfo = await classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate);
+    const classInfo = await classesDB.getItem(classMonth, classDate);
     
     if(!classInfo) {
         return responseHelper("La clase seleccionada no existe", undefined, HTTP_ERROR_CODES.NOT_FOUND);

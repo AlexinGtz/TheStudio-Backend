@@ -11,9 +11,9 @@ export const handler = async (event: any) => {
         return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const { classDate } = event.queryStringParameters;
-    const classDateObj = new Date(classDate);
-    const classInfo = await classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate);
+    const { classDate, classMonth } = event.queryStringParameters;
+
+    const classInfo = await classesDB.getItem(classMonth, classDate);
 
     if(!classInfo || classInfo.cancelled) {
         return responseHelper("Información de la clase no encontrada", undefined, HTTP_ERROR_CODES.NOT_FOUND);

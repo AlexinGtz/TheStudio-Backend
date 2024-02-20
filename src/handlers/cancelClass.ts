@@ -14,13 +14,11 @@ export const handler = async (event: any) => {
 
     const today = new Date();
 
-    const { classDate, userId } = JSON.parse(event.body);
-
-    const classDateObj = new Date(classDate);
+    const { classDate, userId, classMonth } = JSON.parse(event.body);
 
     const [userInfo, classInfo] = await Promise.all([
         usersDB.getItem(tokenData.phoneNumber),
-        classesDB.getItem((classDateObj.getMonth() + 1).toString(), classDate),
+        classesDB.getItem(classMonth, classDate),
     ]);
 
     if(!userInfo || !classInfo) {
