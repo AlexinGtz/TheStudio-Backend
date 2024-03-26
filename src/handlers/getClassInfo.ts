@@ -19,10 +19,5 @@ export const handler = async (event: any) => {
         return responseHelper("Información de la clase no encontrada", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            ...classInfo,
-        }),
-    };
+    return responseHelper('Success', classInfo);
 }

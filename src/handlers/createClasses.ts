@@ -25,10 +25,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 10,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -56,10 +52,6 @@ const days = {
         },
         {
             time: 9,
-            teacher: ''
-        },
-        {
-            time: 10,
             teacher: ''
         },
         {
@@ -93,10 +85,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 10,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -124,10 +112,6 @@ const days = {
         },
         {
             time: 9,
-            teacher: ''
-        },
-        {
-            time: 10,
             teacher: ''
         },
         {
@@ -161,10 +145,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 10,
-            teacher: ''
-        },
-        {
             time: 17,
             teacher: ''
         },
@@ -187,10 +167,6 @@ const days = {
             teacher: ''
         },
         {
-            time: 10,
-            teacher: ''
-        },
-        {
             time: 11,
             teacher: ''
         },
@@ -204,7 +180,7 @@ export const handler = async (event: any) => {
     }
 
     if(tokenData.userType !== USER_TYPES.DEV) {
-        return responseHelper('Acción prohivida para el usuario', undefined, HTTP_ERROR_CODES.FORBIDDEN);
+        return responseHelper('Acción prohibida para el usuario', undefined, HTTP_ERROR_CODES.FORBIDDEN);
     }
 
     const body = JSON.parse(event.body);
@@ -217,7 +193,7 @@ export const handler = async (event: any) => {
 
     do {
         const dayToSchedule = days[startDay.getDay()];
-
+        
         for (let obj of dayToSchedule) {
             let newDay = new Date(startDay.getTime());
             newDay.setHours(startDay.getHours() + obj.time);

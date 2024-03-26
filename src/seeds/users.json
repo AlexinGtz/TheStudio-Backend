@@ -53,8 +53,8 @@
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
     "purchasedPackages": [{
-        "availableClasses": 1,
-        "expireDate": "2023-11-28T00:00:00",
+        "availableClasses": 4,
+        "expireDate": "2024-12-28T00:00:00",
         "totalClasses": 4
     }],
     "bookedClasses": [{"pk": "11", "sk": "2023-11-25T00:00:00Z"}, {"pk": "11", "sk": "2023-11-24T00:00:00Z"}],
@@ -153,4 +153,115 @@
     "userType": "dev",
     "deleted": false,
     "emailEnabled": true
-}]
+},
+{
+    "phoneNumber": "3312355405",
+    "bookedClasses": [
+     {
+      "pk": "2",
+      "sk": "2024-02-09T15:00:00.000Z"
+     }
+    ],
+    "deleted": false,
+    "email": "j.alex1410@hotmail.com",
+    "emailEnabled": true,
+    "firstName": "Alex",
+    "lastName": "Gutierrez",
+    "password": "$2a$10$ZPruj/Ty73/TAQMdGtKZsuneDQ2ZjMrkcqNPNbTZGNO3Ir/lMIxLu",
+    "purchasedPackages": [
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-02-13T18:43:26.754Z",
+      "purchasedDate": "2024-02-06T18:43:26.754Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 1,
+      "expireDate": "2024-02-26T18:33:47.027Z",
+      "purchasedDate": "2024-02-19T18:33:47.027Z",
+      "totalClasses": 1
+     }
+    ],
+    "userType": "user"
+   },
+   {
+    "phoneNumber": "3541019930",
+    "bookedClasses": [
+     {
+      "pk": "2",
+      "sk": "2024-02-20T15:00:00.000Z"
+     },
+     {
+      "pk": "2",
+      "sk": "2024-02-27T15:00:00.000Z"
+     },
+     {
+      "pk": "2",
+      "sk": "2024-02-29T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-01T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-02T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-04T14:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-05T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-06T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-07T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-08T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-09T15:00:00.000Z"
+     },
+     {
+      "pk": "3",
+      "sk": "2024-03-11T15:00:00.000Z"
+     }
+    ],
+    "deleted": false,
+    "email": "bale_0701@hotmail.com",
+    "emailEnabled": true,
+    "firstName": "Lili ",
+    "lastName": "García Pérez ",
+    "password": "$2a$10$QPR6bLv8ui1SqDODC5eqb.M72M5HI0uXpUEKet5t3zXpXxYezji0S",
+    "purchasedPackages": [
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-02-26T19:16:44.993Z",
+      "purchasedDate": "2024-02-19T19:16:44.993Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-03-04T15:25:25.471Z",
+      "purchasedDate": "2024-02-26T15:25:25.471Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 10,
+      "expireDate": "2024-03-28T16:04:44.901Z",
+      "purchasedDate": "2024-02-27T16:04:44.901Z",
+      "totalClasses": 20
+     }
+    ],
+    "userType": "user"
+   }
+]

@@ -16,6 +16,7 @@ export const handler = async (event: any) => {
     const { classDate, users, classMonth } = JSON.parse(event.body);
 
     const today = new Date();
+    const classDateObj = new Date(classDate);
 
     if(!classDate || !classMonth) {
         return responseHelper("No se mando la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
@@ -23,6 +24,10 @@ export const handler = async (event: any) => {
 
     if(classDate < today.toISOString()) {
         return responseHelper("No se puede reservar una clase pasada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+    }
+
+    if((classDateObj.getTime() - today.getTime()) < 3600000) {
+        return responseHelper("No se puede reservar una clase a menos de una hora de empezar", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     const userInfo = await usersDB.getItem(tokenData.phoneNumber);
@@ -38,7 +43,6 @@ export const handler = async (event: any) => {
     const usersToBook = userInfo.userType === USER_TYPES.ADMIN ? [...users] : [userInfo.phoneNumber];
 
     const usersData = await Promise.all(usersToBook.map(u => usersDB.getItem(u)));
-    const classDateObj = new Date(classDate);
 
     const usersWithoutClassBooked = usersData.filter(u => {
         if(!u) return false;
