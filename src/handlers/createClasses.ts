@@ -167,7 +167,7 @@ const days = {
             teacher: ''
         },
         {
-            time: 11,
+            time: 10,
             teacher: ''
         },
     ]

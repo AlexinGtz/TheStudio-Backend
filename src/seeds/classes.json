@@ -1,139 +1,84 @@
 [
     {
-        "month": "3",
-        "date": "2024-03-26T04:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-18T23:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "3",
-        "date": "2024-03-26T05:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-19T06:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "3",
-        "date": "2024-03-26T06:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-19T07:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "12",
-        "date": "2023-12-20T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-19T08:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "12",
-        "date": "2023-12-15T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-19T09:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "12",
-        "date": "2023-12-05T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-19T10:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "11",
-        "date": "2023-11-25T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [{
-            "phoneNumber": "3313393021",
-            "firstName": "Alex",
-            "lastName": "Gutierrez"
-        }],
+        "month": "4",
+        "date": "2024-04-19T16:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+        ]
     },
     {
-        "month": "11",
-        "date": "2023-11-25T01:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
+        "month": "4",
+        "date": "2024-04-20T15:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
         "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-24T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [{
-            "phoneNumber": "3313393021",
-            "firstName": "Alex",
-            "lastName": "Gutierrez"
-        }, 
-        {
-            "phoneNumber": "3313392031",
-            "firstName": "Manuel",
-            "lastName": "Gutierrez"
-        }],
-        "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-23T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
-        "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-22T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
-        "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-20T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
-        "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-18T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [{
-            "phoneNumber": "3313392031",
-            "firstName": "Manuel",
-            "lastName": "Gutierrez"
-        }],
-        "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-15T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
-        "maxUsers": 6,
-        "cancelled": false
-    },
-    {
-        "month": "11",
-        "date": "2023-11-11T00:00:00Z",
-        "instructor": "Maria",
-        "registeredUsers": [],
-        "maxUsers": 6,
-        "cancelled": false
+        "registeredUsers": [
+         {
+          "firstName": "Lili ",
+          "lastName": "García Pérez ",
+          "phoneNumber": "3541019930"
+         },
+         {
+          "firstName": "Fernanda ",
+          "lastName": "Mendoza núñez",
+          "phoneNumber": "3541191946"
+         }
+        ]
     }
 ]

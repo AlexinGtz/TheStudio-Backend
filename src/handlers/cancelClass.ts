@@ -50,7 +50,7 @@ export const handler = async (event: any) => {
         const classDate = new Date(classInfo.date);
         const timeDifferenceInMS = classDate.getTime() - today.getTime();
 
-        if((timeDifferenceInMS/1000) > 86400) {
+        if((timeDifferenceInMS/1000) > 43200) {
             for(let p of user?.purchasedPackages) {
                 const pDate = new Date(p.expireDate)
                 if(today < pDate){

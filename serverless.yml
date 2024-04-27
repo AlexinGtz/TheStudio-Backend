@@ -368,6 +368,48 @@ functions:
             path: /getUserInfo
             method: get
             cors: true
+  getUserSecureMail:
+      name: ${self:custom.base}-getUserSecureMail
+      description: 'Gets a secure mail for users to confirm'
+      handler: src/handlers/getUserSecureMail.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/getUserSecureMail.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /getUserSecureMail
+            method: get
+            cors: true
+  confirmUserMail:
+      name: ${self:custom.base}-confirmUserMail
+      description: 'Confirms the user mail'
+      handler: src/handlers/confirmUserMail.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/confirmUserMail.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /confirmUserMail
+            method: post
+            cors: true
   getUserClasses:
       name: ${self:custom.base}-getUserClasses
       description: 'Allows the user and admin to cancel a class'
