@@ -4,7 +4,7 @@ import { HTTP_ERROR_CODES, USER_TYPES } from "../constants";
 import { responseHelper } from "../helpers/responseHelper";
 import { selectEarliestPackage } from "../helpers/packageHelper";
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
+const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date_by_type');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event: any) => {
@@ -13,16 +13,17 @@ export const handler = async (event: any) => {
         return responseHelper("Token de Usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const { classDate, users, classMonth } = JSON.parse(event.body);
+    const { classDateByType, users, classMonth } = JSON.parse(event.body);
 
     const today = new Date();
-    const classDateObj = new Date(classDate);
+    const classDateString = classDateByType.split('#')[0]
+    const classDateObj = new Date(classDateString);
 
-    if(!classDate || !classMonth) {
+    if(!classDateByType || !classMonth) {
         return responseHelper("No se mando la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    if(classDate < today.toISOString()) {
+    if(classDateString < today.toISOString()) {
         return responseHelper("No se puede reservar una clase pasada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
@@ -46,7 +47,7 @@ export const handler = async (event: any) => {
 
     const usersWithoutClassBooked = usersData.filter(u => {
         if(!u) return false;
-        const classBooked = u.bookedClasses.some(c => c.sk === classDate);
+        const classBooked = u.bookedClasses.some(c => c.sk === classDateByType);
         return !classBooked;
     });
 
@@ -54,7 +55,7 @@ export const handler = async (event: any) => {
         return responseHelper("Esta clase ya esta reservada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const classInfo = await classesDB.getItem(classMonth, classDate);
+    const classInfo = await classesDB.getItem(classMonth, classDateByType);
     
     if(!classInfo) {
         return responseHelper("La clase seleccionada no existe", undefined, HTTP_ERROR_CODES.NOT_FOUND);
@@ -88,7 +89,7 @@ export const handler = async (event: any) => {
         });
     
         selectedPackage.availableClasses = selectedPackage.availableClasses - 1;
-        u.bookedClasses.push({pk: classInfo.month, sk: classInfo.date});
+        u.bookedClasses.push({pk: classInfo.month, sk: classInfo.date_by_type});
         updatedUsersCount++;
         userUpdateRequests.push(usersDB.updateItem(u.phoneNumber,
         {
@@ -103,7 +104,7 @@ export const handler = async (event: any) => {
 
     await Promise.all([
         userUpdateRequests,
-        classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date)
+        classesDB.updateItem(classInfo.month,{registeredUsers: classInfo!.registeredUsers}, classInfo.date_by_type)
     ])
 
     return responseHelper("Clase agendada exitosamente");

@@ -3,7 +3,7 @@ import { HTTP_ERROR_CODES, USER_TYPES, msInADay } from '../constants';
 import { validateToken } from '../helpers/validateToken';
 import { responseHelper } from '../helpers/responseHelper';
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
+const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date_by_type');
 
 const days = {
     0: [],
@@ -199,10 +199,18 @@ export const handler = async (event: any) => {
             newDay.setHours(startDay.getHours() + obj.time);
             itemsToInsert.push({
                 month: parseInt(month).toString(),
-                date: newDay.toISOString(),
+                date_by_type: `${newDay.toISOString()}#PILATES`,
                 instructor: obj.teacher,
                 registeredUsers: [],
                 maxUsers: 6,
+                cancelled: false
+            });
+            itemsToInsert.push({
+                month: parseInt(month).toString(),
+                date_by_type: `${newDay.toISOString()}#WELLNESS`,
+                instructor: obj.teacher,
+                registeredUsers: [],
+                maxUsers: 10,
                 cancelled: false
             });
         }

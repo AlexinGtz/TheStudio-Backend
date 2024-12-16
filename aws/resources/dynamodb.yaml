@@ -44,6 +44,26 @@ Resources:
             Value: ${self:provider.stage}
           - Key: Service
             Value: ${self:service}
+  classesTableV2:
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:provider.stage}-${self:service}-classes-v2
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: "month"
+            AttributeType: "S"
+          - AttributeName: "date_by_type"
+            AttributeType: "S"
+        KeySchema: 
+          - AttributeName: "month"
+            KeyType: "HASH"
+          - AttributeName: "date_by_type"
+            KeyType: "RANGE"
+        Tags:
+          - Key: Stage
+            Value: ${self:provider.stage}
+          - Key: Service
+            Value: ${self:service}
   packagesTable:
       Type: AWS::DynamoDB::Table
       Properties: 

@@ -3,7 +3,7 @@ import { CustomDynamoDB } from "../dynamodb/database";
 import { responseHelper } from "../helpers/responseHelper";
 import { validateToken } from "../helpers/validateToken";
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
+const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date_by_type');
 
 export const handler = async (event: any) => {
     const tokenData = await validateToken(event.headers.Authorization);
@@ -11,9 +11,9 @@ export const handler = async (event: any) => {
         return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const { classDate, classMonth } = event.queryStringParameters;
+    const { classDateByType, classMonth } = event.queryStringParameters;
 
-    const classInfo = await classesDB.getItem(classMonth, classDate);
+    const classInfo = await classesDB.getItem(classMonth, classDateByType);
 
     if(!classInfo || classInfo.cancelled) {
         return responseHelper("Información de la clase no encontrada", undefined, HTTP_ERROR_CODES.NOT_FOUND);

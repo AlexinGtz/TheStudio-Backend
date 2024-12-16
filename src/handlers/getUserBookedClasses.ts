@@ -3,7 +3,7 @@ import { CustomDynamoDB } from "../dynamodb/database";
 import { validateToken } from "../helpers/validateToken";
 import { responseHelper } from "../helpers/responseHelper";
 
-const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date');
+const classesDB = new CustomDynamoDB(process.env.CLASSES_TABLE!, 'month', 'date_by_type');
 const usersDB = new CustomDynamoDB(process.env.USERS_TABLE!, 'phoneNumber');
 
 export const handler = async (event: any) => {
@@ -28,7 +28,7 @@ export const handler = async (event: any) => {
     const classes = await classesDB.batchGetById(userInfo.bookedClasses);
 
     const filteredClasses = classes.filter((c) => {
-        const classDate = new Date(c.date);
+        const classDate = new Date(c.date_by_type.split('#')[0]);
         return (classDate.getTime() > today.getTime()) && !c.cancelled;
     });
 
