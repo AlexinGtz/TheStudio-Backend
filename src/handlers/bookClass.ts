@@ -20,7 +20,7 @@ export const handler = async (event: any) => {
     const classDateObj = new Date(classDateString);
 
     if(!classDateByType || !classMonth) {
-        return responseHelper("No se mando la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        return responseHelper("No se mandó la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     if(classDateString < today.toISOString()) {

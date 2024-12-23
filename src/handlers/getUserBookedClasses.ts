@@ -11,7 +11,7 @@ export const handler = async (event: any) => {
     if(!tokenData) {
         return responseHelper("Token de usuario no válido", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
-
+    
     const userInfo = await usersDB.getItem(tokenData.phoneNumber);
 
 
@@ -23,7 +23,7 @@ export const handler = async (event: any) => {
     
     if (!userInfo.bookedClasses || userInfo.bookedClasses.length === 0) {
         return responseHelper('Success', {classes: []});
-    }
+    }    
     
     const classes = await classesDB.batchGetById(userInfo.bookedClasses);
 

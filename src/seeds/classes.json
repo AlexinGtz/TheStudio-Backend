@@ -1,84 +1,42 @@
 [
     {
-        "month": "4",
-        "date": "2024-04-18T23:00:00.000Z",
+        "month": "12",
+        "date_by_type": "2024-12-20T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
-        "registeredUsers": [
-        ]
+        "registeredUsers": []
     },
     {
-        "month": "4",
-        "date": "2024-04-19T06:00:00.000Z",
+        "month": "12",
+        "date_by_type": "2024-12-21T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
-        "registeredUsers": [
-        ]
+        "registeredUsers": []
     },
     {
-        "month": "4",
-        "date": "2024-04-19T07:00:00.000Z",
+        "month": "12",
+        "date_by_type": "2024-12-20T19:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
-        "registeredUsers": [
-        ]
+        "registeredUsers": []
     },
     {
-        "month": "4",
-        "date": "2024-04-19T08:00:00.000Z",
+        "month": "1",
+        "date_by_type": "2025-01-15T19:00:00.000Z#WELLNESS",
         "cancelled": false,
         "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": [
-        ]
+        "maxUsers": 10,
+        "registeredUsers": []
     },
     {
-        "month": "4",
-        "date": "2024-04-19T09:00:00.000Z",
+        "month": "12",
+        "date_by_type": "2025-12-15T19:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
-        "registeredUsers": [
-        ]
-    },
-    {
-        "month": "4",
-        "date": "2024-04-19T10:00:00.000Z",
-        "cancelled": false,
-        "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": [
-        ]
-    },
-    {
-        "month": "4",
-        "date": "2024-04-19T16:00:00.000Z",
-        "cancelled": false,
-        "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": [
-        ]
-    },
-    {
-        "month": "4",
-        "date": "2024-04-20T15:00:00.000Z",
-        "cancelled": false,
-        "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": [
-         {
-          "firstName": "Lili ",
-          "lastName": "García Pérez ",
-          "phoneNumber": "3541019930"
-         },
-         {
-          "firstName": "Fernanda ",
-          "lastName": "Mendoza núñez",
-          "phoneNumber": "3541191946"
-         }
-        ]
+        "registeredUsers": []
     }
 ]

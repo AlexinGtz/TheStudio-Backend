@@ -13,6 +13,10 @@ export const handler = async (event: any) => {
 
     const { classDateByType, classMonth } = event.queryStringParameters;
 
+    if(!classDateByType || !classMonth) {
+        return responseHelper("Falta el mes o el tipo de clase en la llamada", undefined, HTTP_ERROR_CODES.NOT_FOUND);
+    }
+
     const classInfo = await classesDB.getItem(classMonth, classDateByType);
 
     if(!classInfo || classInfo.cancelled) {

@@ -27,11 +27,11 @@ export const handler = async (event: any) => {
     nextMonth.setMonth(nextMonth.getMonth() + 1);
 
     const classes = (await Promise.all([
-        await classesDB.query((today.getMonth() + 1).toString(), today.toISOString(), '>'),
-        await classesDB.query((today.getMonth() + 2).toString(), nextMonth.toISOString(), '<')
+        classesDB.query((today.getMonth() + 1).toString()),
+        classesDB.query((nextMonth.getMonth() + 1).toString())
     ])).flat();
 
-    const filteredClasses = classes.filter((c) => !c.cancelled && c.date_by_type.split('#')[1] === type);
+    const filteredClasses = classes.filter((c) => !c.cancelled && c.date_by_type.split('#')[1] === type && new Date(c.date_by_type.split('#')[0]) > today && new Date(c.date_by_type.split('#')[0]) < nextMonth);
 
     return responseHelper('Success', {classes: filteredClasses})
 }

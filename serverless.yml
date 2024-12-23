@@ -72,7 +72,7 @@ custom:
         sources:
           - table: ${self:provider.stage}-${self:service}-users
             sources: [./src/seeds/users.json]
-          - table: ${self:provider.stage}-${self:service}-classes
+          - table: ${self:provider.stage}-${self:service}-classes-v2
             sources: [./src/seeds/classes.json]
           - table: ${self:provider.stage}-${self:service}-packages
             sources: [./src/seeds/packages.json]

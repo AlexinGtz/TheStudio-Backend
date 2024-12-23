@@ -2,27 +2,31 @@
     "id": "1",
     "classQuantity": 1,
     "expireDays": 7,
-    "cost": 250
+    "cost": 250,
+    "classType": "PILATES"
 },
 {
     "id": "2",
     "classQuantity": 4,
     "expireDays": 10,
     "cost": 950,
-    "updatedAt": ""
+    "updatedAt": "",
+    "classType": "PILATES"
 },
 {
     "id": "3",
     "classQuantity": 8,
     "expireDays": 20,
     "cost": 1500,
-    "updatedAt": ""
+    "updatedAt": "",
+    "classType": "PILATES"
 },
 {
     "id": "4",
     "classQuantity": 20,
     "expireDays": 30,
     "cost": 2000,
-    "updatedAt": ""
+    "updatedAt": "",
+    "classType": "PILATES"
 }
 ]
