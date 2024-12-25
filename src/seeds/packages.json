@@ -28,5 +28,36 @@
     "cost": 2000,
     "updatedAt": "",
     "classType": "PILATES"
+},
+{
+    "id": "5",
+    "classQuantity": 1,
+    "expireDays": 7,
+    "cost": 300,
+    "classType": "WELLNESS"
+},
+{
+    "id": "6",
+    "classQuantity": 4,
+    "expireDays": 10,
+    "cost": 1200,
+    "updatedAt": "",
+    "classType": "WELLNESS"
+},
+{
+    "id": "7",
+    "classQuantity": 8,
+    "expireDays": 20,
+    "cost": 1800,
+    "updatedAt": "",
+    "classType": "WELLNESS"
+},
+{
+    "id": "8",
+    "classQuantity": 20,
+    "expireDays": 30,
+    "cost": 2200,
+    "updatedAt": "",
+    "classType": "WELLNESS"
 }
 ]

@@ -10,8 +10,17 @@
          "availableClasses": 15,
          "expireDate": "2025-11-15T20:18:40.261Z",
          "purchasedDate": "2024-11-08T20:18:40.261Z",
-         "totalClasses": 15
-        }],
+         "totalClasses": 15,
+         "type": "PILATES"
+        },
+        {
+         "availableClasses": 15,
+         "expireDate": "2025-11-15T20:18:40.261Z",
+         "purchasedDate": "2024-11-08T20:18:40.261Z",
+         "totalClasses": 15,
+         "type": "WELLNESS"
+        }
+    ],
     "bookedClasses": [],
     "deleted": false,
     "emailEnabled": true

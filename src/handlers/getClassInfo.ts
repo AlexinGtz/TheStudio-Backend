@@ -23,5 +23,8 @@ export const handler = async (event: any) => {
         return responseHelper("Información de la clase no encontrada", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
 
-    return responseHelper('Success', classInfo);
+    return responseHelper('Success', {
+        ...classInfo,
+        date: classInfo.date_by_type.split('#')[0],
+    });
 }

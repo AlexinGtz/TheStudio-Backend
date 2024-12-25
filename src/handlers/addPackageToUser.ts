@@ -42,6 +42,7 @@ export const handler = async (event: any) => {
         expireDate: expireDate.toISOString(),
         totalClasses: packageInfo.classQuantity,
         purchasedDate: new Date().toISOString(),
+        type: packageInfo.classType,
     })
 
     await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo.purchasedPackages})

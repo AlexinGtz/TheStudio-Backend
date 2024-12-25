@@ -76,7 +76,7 @@ export const handler = async (event: any) => {
  
     usersWithoutClassBooked.forEach((u) => {
         if(!u) return;
-        const selectedPackage = selectEarliestPackage(u.purchasedPackages);
+        const selectedPackage = selectEarliestPackage(u.purchasedPackages, classInfo.date_by_type.split('#')[1]);
 
         if(!selectedPackage || selectedPackage.availableClasses <= 0) {
             return;
