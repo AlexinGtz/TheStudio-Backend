@@ -36,7 +36,8 @@ export const handler = async (event) => {
         deleted: false,
         emailEnabled: true,
         bookedClasses: [],
-        purchasedPackages: []
+        purchasedPackages: [],
+        trialClassAvailable: true
     });
 
     try {

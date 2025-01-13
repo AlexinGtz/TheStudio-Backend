@@ -59,5 +59,13 @@
     "cost": 2200,
     "updatedAt": "",
     "classType": "WELLNESS"
+},
+{
+    "id": "9",
+    "classQuantity": 10,
+    "expireDays": 25,
+    "cost": 2200,
+    "updatedAt": "",
+    "classType": "COMBINED"
 }
 ]

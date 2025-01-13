@@ -34,6 +34,7 @@ export const handler = async (event: any) => {
         purchasedPackages: userData.purchasedPackages,
         userType: userData.userType,
         bookedClasses: userData.bookedClasses,
-        emailEnabled: userData.emailEnabled
+        emailEnabled: userData.emailEnabled,
+        trialClassAvailable: userData.trialClassAvailable,
     });
 }

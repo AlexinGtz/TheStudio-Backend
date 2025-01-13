@@ -32,18 +32,35 @@ export const handler = async (event: any) => {
             undefined, 
             HTTP_ERROR_CODES.NOT_FOUND);
     }
-
+    
     const expireDate = new Date();
-
     expireDate.setTime(expireDate.getTime() + msInADay * packageInfo.expireDays)
 
-    userInfo.purchasedPackages.push({
-        availableClasses: packageInfo.classQuantity,
-        expireDate: expireDate.toISOString(),
-        totalClasses: packageInfo.classQuantity,
-        purchasedDate: new Date().toISOString(),
-        type: packageInfo.classType,
-    })
+    if(packageInfo.classType === "COMBINED") {
+        userInfo.purchasedPackages.push({
+            availableClasses: packageInfo.classQuantity,
+            expireDate: expireDate.toISOString(),
+            totalClasses: packageInfo.classQuantity,
+            purchasedDate: new Date().toISOString(),
+            type: 'PILATES',
+        });
+
+        userInfo.purchasedPackages.push({
+            availableClasses: packageInfo.classQuantity,
+            expireDate: expireDate.toISOString(),
+            totalClasses: packageInfo.classQuantity,
+            purchasedDate: new Date().toISOString(),
+            type: 'WELLNESS',
+        })
+    } else {
+        userInfo.purchasedPackages.push({
+            availableClasses: packageInfo.classQuantity,
+            expireDate: expireDate.toISOString(),
+            totalClasses: packageInfo.classQuantity,
+            purchasedDate: new Date().toISOString(),
+            type: packageInfo.classType,
+        })
+    }
 
     await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo.purchasedPackages})
     

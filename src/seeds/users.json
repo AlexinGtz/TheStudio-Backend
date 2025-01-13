@@ -23,7 +23,8 @@
     ],
     "bookedClasses": [],
     "deleted": false,
-    "emailEnabled": true
+    "emailEnabled": true,
+    "trialClassAvailable": true
 },
 {
     "firstName": "Alex",

@@ -59,6 +59,8 @@ custom:
   environment: ${self:custom.defaults.environment}
   service: ${self:service}
   base: ${self:service}-${self:provider.stage}
+  serverless-offline:
+    useChildProcesses: true
   dynamodb:
     stages:
       - local
@@ -598,6 +600,27 @@ functions:
       events:
         - http:
             path: /forgotPassword
+            method: post
+            cors: true
+  removeTrialClass:
+      name: ${self:custom.base}-removeTrialClass
+      description: 'Allows admin to remove a class'
+      handler: src/handlers/removeTrialClass.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/removeTrialClass.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        JWT_SECRET: ${self:custom.environment.JWT_SECRET}
+      events:
+        - http:
+            path: /removeTrialClass
             method: post
             cors: true
   

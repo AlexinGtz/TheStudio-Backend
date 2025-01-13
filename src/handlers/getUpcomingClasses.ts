@@ -34,7 +34,7 @@ export const handler = async (event: any) => {
     const filteredClasses = classes.filter((c) => !c.cancelled && c.date_by_type.split('#')[1] === type && new Date(c.date_by_type.split('#')[0]) > today && new Date(c.date_by_type.split('#')[0]) < nextMonth);
 
     const processedClasses = filteredClasses.map((c) => {
-        const [date, time] = c.date_by_type.split('#');
+        const [date, _] = c.date_by_type.split('#');
         return {
             ...c,
             date
