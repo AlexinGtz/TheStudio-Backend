@@ -12,7 +12,7 @@ const finalUsers = users.map((user) => {
         return expirationDate > today;
     });    
     const filteredBookedClasses = user.bookedClasses?.L.filter((bookedClass) => {
-        const classDate = new Date(bookedClass.M.sk.S);
+        const classDate = new Date(bookedClass.M.sk.S.split('#')[0]);
         return classDate > today;
     });
     return {
