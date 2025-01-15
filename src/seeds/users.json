@@ -5,22 +5,7 @@
     "phoneNumber": "3313393021",
     "password": "$2b$10$cIl07qGdLTcCbBgiDCb31urv7qYqGIsd6lZXXo5GTgWTOAj7PdbKm",
     "userType": "user",
-    "purchasedPackages": [
-        {
-         "availableClasses": 15,
-         "expireDate": "2025-11-15T20:18:40.261Z",
-         "purchasedDate": "2024-11-08T20:18:40.261Z",
-         "totalClasses": 15,
-         "type": "PILATES"
-        },
-        {
-         "availableClasses": 15,
-         "expireDate": "2025-11-15T20:18:40.261Z",
-         "purchasedDate": "2024-11-08T20:18:40.261Z",
-         "totalClasses": 15,
-         "type": "WELLNESS"
-        }
-    ],
+    "purchasedPackages": [],
     "bookedClasses": [],
     "deleted": false,
     "emailEnabled": true,
@@ -45,5 +30,527 @@
     "userType": "dev",
     "deleted": false,
     "emailEnabled": true
-}
+},
+{
+    "phoneNumber": "3312188843",
+    "bookedClasses": [
+     {
+      "pk": "5",
+      "sk": "2024-05-21T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-23T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-24T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-22T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-27T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-28T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-29T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-30T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "5",
+      "sk": "2024-05-31T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-03T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-04T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-05T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-06T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-07T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-10T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-13T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-11T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-12T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-14T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-19T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-15T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-17T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-24T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-20T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-26T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-27T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "6",
+      "sk": "2024-06-28T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-01T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-02T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-03T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-05T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-05T00:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-08T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-09T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-10T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-11T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-12T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-15T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-16T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-17T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-18T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-19T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-22T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-23T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-24T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-01T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "7",
+      "sk": "2024-07-31T23:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-02T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-09T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-13T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-08T23:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-14T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-15T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-16T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-20T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-28T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "8",
+      "sk": "2024-08-29T23:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-02T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-03T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-04T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-05T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-06T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-09T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-10T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-11T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-12T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-13T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-16T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-18T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-26T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-27T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-24T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "9",
+      "sk": "2024-09-25T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-02T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-03T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-04T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-09T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-08T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-14T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-15T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-16T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-18T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-21T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-25T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-24T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-29T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "10",
+      "sk": "2024-10-28T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-11T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-12T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-14T23:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-27T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-29T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-26T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "11",
+      "sk": "2024-11-28T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "12",
+      "sk": "2024-12-10T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "12",
+      "sk": "2024-12-11T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-13T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-14T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-16T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-17T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-15T14:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-14T15:00:00.000Z#PILATES"
+     },
+     {
+      "pk": "1",
+      "sk": "2025-01-15T15:00:00.000Z#PILATES"
+     }
+    ],
+    "deleted": false,
+    "email": "alex@test.com",
+    "emailEnabled": true,
+    "firstName": "TestAlex",
+    "lastName": "Gtz",
+    "password": "$2a$10$uORlp2vo9HvjMo6Pc/Le4uPmC9HQ2NAa7Hj9RVA9DqulRJ06sdi2S",
+    "purchasedPackages": [
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-06-19T22:05:16.719Z",
+      "purchasedDate": "2024-05-20T22:05:16.719Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-07-06T14:59:57.871Z",
+      "purchasedDate": "2024-06-06T14:59:57.871Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-06-22T14:54:28.032Z",
+      "purchasedDate": "2024-06-15T14:54:28.032Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-08-02T14:54:46.553Z",
+      "purchasedDate": "2024-07-03T14:54:46.553Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-08-30T11:56:53.570Z",
+      "purchasedDate": "2024-07-31T11:56:53.570Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-09-02T15:10:58.366Z",
+      "purchasedDate": "2024-08-26T15:10:58.366Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-09-02T15:11:01.807Z",
+      "purchasedDate": "2024-08-26T15:11:01.807Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-09-02T15:11:04.627Z",
+      "purchasedDate": "2024-08-26T15:11:04.627Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 1,
+      "expireDate": "2024-09-27T15:57:12.905Z",
+      "purchasedDate": "2024-08-28T15:57:12.905Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-09-25T14:59:59.676Z",
+      "purchasedDate": "2024-09-18T14:59:59.677Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-10-31T14:54:58.112Z",
+      "purchasedDate": "2024-10-01T14:54:58.112Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 8,
+      "expireDate": "2024-11-29T14:54:33.959Z",
+      "purchasedDate": "2024-10-30T14:54:33.959Z",
+      "totalClasses": 15
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-12-12T15:01:28.033Z",
+      "purchasedDate": "2024-12-05T15:01:28.033Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-12-12T15:01:31.593Z",
+      "purchasedDate": "2024-12-05T15:01:31.593Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 0,
+      "expireDate": "2024-12-12T15:01:34.232Z",
+      "purchasedDate": "2024-12-05T15:01:34.232Z",
+      "totalClasses": 1
+     },
+     {
+      "availableClasses": 8,
+      "expireDate": "2025-01-16T14:58:21.601Z",
+      "purchasedDate": "2024-12-17T14:58:21.601Z",
+      "totalClasses": 15
+     }
+    ],
+    "userType": "user"
+   }
 ]

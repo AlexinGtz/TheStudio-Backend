@@ -24,13 +24,12 @@ export const handler = async (event: any) => {
     if (!userInfo.bookedClasses || userInfo.bookedClasses.length === 0) {
         return responseHelper('Success', {classes: []});
     }    
-    
-    const classes = await classesDB.batchGetById(userInfo.bookedClasses);
 
-    const filteredClasses = classes.filter((c) => {
-        const classDate = new Date(c.date_by_type.split('#')[0]);
-        return (classDate.getTime() > today.getTime()) && !c.cancelled;
-    });
+    const filteredBookedClasses = userInfo.bookedClasses.filter((c) => c.sk.split('#')[0] > today.toISOString());
+    
+    const classes = await classesDB.batchGetById(filteredBookedClasses);
+
+    const filteredClasses = classes.filter((c) => !c.cancelled);
 
     return responseHelper('Success', {classes: filteredClasses});
 }
