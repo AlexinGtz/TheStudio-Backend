@@ -1,50 +1,46 @@
 [
     {
-        "month": "12",
-        "date_by_type": "2024-12-20T20:00:00.000Z#PILATES",
-        "cancelled": false,
-        "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": []
-    },
-    {
-        "month": "12",
-        "date_by_type": "2024-12-21T20:00:00.000Z#PILATES",
-        "cancelled": false,
-        "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": []
-    },
-    {
-        "month": "12",
-        "date_by_type": "2024-12-20T19:00:00.000Z#PILATES",
-        "cancelled": false,
-        "instructor": "",
-        "maxUsers": 6,
-        "registeredUsers": []
-    },
-    {
         "month": "1",
-        "date_by_type": "2025-01-15T19:00:00.000Z#WELLNESS",
+        "date": "2025-01-31T23:00:00.000Z",
         "cancelled": false,
         "instructor": "",
-        "maxUsers": 10,
-        "registeredUsers": []
-    },
-    {
+        "maxUsers": 6,
+        "registeredUsers": [
+         {
+          "firstName": "Victoria ",
+          "lastName": "Mora",
+          "phoneNumber": "3541019641"
+         }
+        ]
+       },
+       {
         "month": "1",
-        "date_by_type": "2025-01-15T19:00:00.000Z#PILATES",
+        "date": "2025-01-31T24:00:00.000Z",
+        "cancelled": false,
+        "instructor": "",
+        "maxUsers": 6,
+        "registeredUsers": [
+         {
+          "firstName": "Victoria ",
+          "lastName": "Mora",
+          "phoneNumber": "3541019641"
+         }
+        ]
+       },
+       {
+        "month": "2",
+        "date": "2025-02-01T14:00:00.000Z",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
         "registeredUsers": []
-    },
-    {
-        "month": "12",
-        "date_by_type": "2025-12-15T19:00:00.000Z#PILATES",
+       },
+       {
+        "month": "2",
+        "date": "2025-02-01T15:00:00.000Z",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
         "registeredUsers": []
-    }
+       }
 ]

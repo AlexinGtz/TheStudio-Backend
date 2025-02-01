@@ -29,6 +29,8 @@ export const handler = async (event: any) => {
         return responseHelper("La clase ya ha sido cancelada", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
+    const classType = classInfo.date_by_type.split('#')[1];
+
     if( (userInfo.userType === USER_TYPES.ADMIN && userId)
         || userInfo.userType === USER_TYPES.USER) {
 
@@ -53,7 +55,7 @@ export const handler = async (event: any) => {
         if((timeDifferenceInMS/1000) > 43200) {
             for(let p of user?.purchasedPackages) {
                 const pDate = new Date(p.expireDate)
-                if(today < pDate){
+                if(today < pDate && p.type === classType){
                     p.availableClasses += 1;
                     break;
                 }
@@ -82,7 +84,7 @@ export const handler = async (event: any) => {
         users.forEach(user => {
             for(let p of user.purchasedPackages) {
                 const pDate = new Date(p.expireDate)
-                if(today < pDate){
+                if(today < pDate && p.type === classType){
                     p.availableClasses += 1;
                     break;
                 }
