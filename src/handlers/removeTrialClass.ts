@@ -33,12 +33,19 @@ export const handler = async (event: any) => {
 
     if(!userInfo.trialClassAvailable) {
         return responseHelper(
-            "No hay clases de prueba disponibles", 
+            "El usuario ya usó su clase de prueba", 
             undefined, 
             HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
-    const selectedPackage = userInfo.purchasedPackages[0];
+    const selectedPackage = userInfo.purchasedPackages.find(p => p.availableClasses > 0);
+
+    if(!selectedPackage) {
+        return responseHelper(
+            "El usuario no tiene clases disponibles", 
+            undefined, 
+            HTTP_ERROR_CODES.BAD_REQUEST);
+    }
     selectedPackage.availableClasses -= 1;
 
     await usersDB.updateItem(userInfo.phoneNumber,{purchasedPackages: userInfo.purchasedPackages, trialClassAvailable: false});
