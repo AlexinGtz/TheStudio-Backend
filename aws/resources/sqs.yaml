@@ -1,0 +1,79 @@
+Resources:
+  TheStudioBounceQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: TheStudioBounceQueue
+      VisibilityTimeout: 30
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt TheStudioBounceQueueDLQ.Arn
+        maxReceiveCount: 3
+
+  TheStudioBounceQueueDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: TheStudioBounceQueueDLQ
+      VisibilityTimeout: 30
+
+  TheStudioComplaintQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: TheStudioComplaintQueue
+      VisibilityTimeout: 30
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt TheStudioComplaintQueueDLQ.Arn
+        maxReceiveCount: 3
+
+  TheStudioComplaintQueueDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: TheStudioComplaintQueueDLQ
+      VisibilityTimeout: 30
+    
+  TheStudioBounceQueuePolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      Queues:
+        - !Ref TheStudioBounceQueue
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowSNSPublish
+            Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Action: sqs:SendMessage
+            Resource: !GetAtt [TheStudioBounceQueue, Arn]
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !GetAtt [TheStudioBounceTopic, TopicArn]
+
+  TheStudioComplainsQueuePolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      Queues:
+        - !Ref TheStudioComplaintQueue
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowSNSPublish
+            Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Action: sqs:SendMessage
+            Resource: !GetAtt [TheStudioComplaintQueue, Arn]
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !GetAtt [TheStudioComplaintTopic, TopicArn]
+
+# Outputs:
+#   BounceQueueARN:
+#     Description: ARN of the bounce queue
+#     Value: !GetAtt TheStudioBounceQueue.Arn
+#     Export:
+#       Name: !Sub "${self:provider.stage}-${self:service}-BounceQueueARN"
+
+#   ComplaintQueueARN:
+#     Description: ARN of the complaint queue
+#     Value: !GetAtt TheStudioComplaintQueue.Arn 
+#     Export:
+#       Name: !Sub "${self:provider.stage}-${self:service}-ComplaintQueueARN"

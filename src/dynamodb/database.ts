@@ -2,8 +2,8 @@ import { BatchGetItemCommand, BatchWriteItemCommand, DeleteItemCommand, DynamoDB
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 
 export class CustomDynamoDB {
-    tableName;
-    primaryKey;
+    private tableName: string;
+    private primaryKey: string;
     sortingKey;
     DB;
 

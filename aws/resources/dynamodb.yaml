@@ -99,3 +99,48 @@ Resources:
             Value: ${self:provider.stage}
           - Key: Service
             Value: ${self:service}
+  purchasesTable:
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:provider.stage}-${self:service}-purchases
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+          - AttributeName: "package_id"
+            AttributeType: "S"
+          - AttributeName: "purchase_date"
+            AttributeType: "S"
+        KeySchema: 
+          - AttributeName: "id"
+            KeyType: "HASH"
+        GlobalSecondaryIndexes:
+          - IndexName: package_id-index
+            KeySchema: 
+              - AttributeName: "package_id"
+                KeyType: "HASH"
+              - AttributeName: "purchase_date"
+                KeyType: "RANGE"
+            Projection: 
+              ProjectionType: ALL
+        Tags:
+          - Key: Stage
+            Value: ${self:provider.stage}
+          - Key: Service
+            Value: ${self:service}
+  forbiddenEmailsTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: ${self:provider.stage}-${self:service}-forbidden-emails
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: "email"
+          AttributeType: "S"
+      KeySchema: 
+        - AttributeName: "email"
+          KeyType: "HASH"
+      Tags:
+        - Key: Stage
+          Value: ${self:provider.stage}
+        - Key: Service
+          Value: ${self:service}

@@ -43,6 +43,15 @@ provider:
           Action: 
             - ses:SendRawEmail
           Resource: '*'
+        - Effect: Allow
+          Action:
+            - sqs:ReceiveMessage
+            - sqs:DeleteMessage
+            - sqs:GetQueueAttributes
+            - sqs:ChangeMessageVisibility
+          Resource: 
+            - !GetAtt [TheStudioBounceQueue, Arn]
+            - !GetAtt [TheStudioComplaintQueue, Arn]
   apiGateway:
     restApiId: !Ref MainApi
     restApiRootResourceId: !GetAtt MainApi.RootResourceId
@@ -52,6 +61,8 @@ resources:
   - '${file(./aws/resources/dynamodb.yaml)}'
   - '${file(./aws/resources/s3.yaml)}'
   - '${file(./aws/resources/apigateway.yaml)}'
+  - '${file(./aws/resources/sqs.yaml)}'
+  - '${file(./aws/resources/sns.yaml)}'
 
 custom:
   defaults: ${file(./defaults.yaml)}
@@ -301,6 +312,7 @@ functions:
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
         PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
+        PURCHASES_TABLE: ${self:custom.environment.PURCHASES_TABLE}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
       events:
         - http:
@@ -532,6 +544,7 @@ functions:
           - 'src/helpers/**/*'
       environment:
         USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        FORBIDDEN_EMAILS: ${self:custom.environment.FORBIDDEN_EMAILS}
         JWT_SECRET: ${self:custom.environment.JWT_SECRET}
       events:
         - http:
@@ -623,4 +636,48 @@ functions:
             path: /removeTrialClass
             method: post
             cors: true
-  
+  processBouncesAndComplains:
+      name: ${self:custom.base}-processBouncesAndComplains
+      description: 'Processes bounces and complains'
+      handler: src/handlers/processBouncesAndComplains.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/processBouncesAndComplains.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        USERS_TABLE: ${self:custom.environment.USERS_TABLE}
+        FORBIDDEN_EMAILS: ${self:custom.environment.FORBIDDEN_EMAILS}
+      events:
+        - sqs:
+            arn: !GetAtt [TheStudioBounceQueue, Arn]
+        - sqs:
+            arn: !GetAtt [TheStudioComplaintQueue, Arn]
+  sendReports:
+      name: ${self:custom.base}-sendReports
+      description: 'Sends reports'
+      handler: src/handlers/sendReports.handler
+      timeout: 30
+      memorySize: 264
+      package:
+        patterns:
+          - '!src/**'
+          - 'src/handlers/sendReports.*'
+          - 'src/constants.*'
+          - 'src/dynamodb/*'
+          - 'src/helpers/**/*'
+      environment:
+        PACKAGES_TABLE: ${self:custom.environment.PACKAGES_TABLE}
+        PURCHASES_TABLE: ${self:custom.environment.PURCHASES_TABLE}
+      # events:
+      #   - http:
+      #       path: /sendReports
+      #       method: post
+      #       cors: true
+      events:
+        # - schedule: cron(0 19 * * 6)
+        - schedule: cron(*/3 * * * ? *)

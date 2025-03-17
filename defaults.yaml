@@ -6,4 +6,6 @@ environment:
   CLASSES_TABLE: ${self:provider.stage}-${self:service}-classes-v2
   CODES_TABLE: ${self:provider.stage}-${self:service}-verification-codes
   PACKAGES_TABLE: ${self:provider.stage}-${self:service}-packages
+  PURCHASES_TABLE: ${self:provider.stage}-${self:service}-purchases
+  FORBIDDEN_EMAILS: ${self:provider.stage}-${self:service}-forbidden-emails
   JWT_SECRET: pX6kDWovpzjkfon

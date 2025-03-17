@@ -1,0 +1,49 @@
+Resources:
+  TheStudioBounceTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: ${self:provider.stage}-${self:service}-bounce-topic
+      Tags:
+        - Key: Stage
+          Value: ${self:provider.stage}
+        - Key: Service
+          Value: ${self:service}
+          
+  TheStudioComplaintTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: ${self:provider.stage}-${self:service}-complaint-topic
+      Tags:
+        - Key: Stage
+          Value: ${self:provider.stage}
+        - Key: Service
+          Value: ${self:service}
+
+  TheStudioBounceTopicSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !GetAtt TheStudioBounceTopic.TopicArn
+      Protocol: sqs
+      Endpoint: !GetAtt [TheStudioBounceQueue, Arn]
+      RawMessageDelivery: true
+
+  TheStudioComplaintTopicSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !GetAtt TheStudioComplaintTopic.TopicArn
+      Protocol: sqs
+      Endpoint: !GetAtt [TheStudioComplaintQueue, Arn]
+      RawMessageDelivery: true
+
+# Outputs:
+#   BounceTopicARN:
+#     Description: ARN of the bounce topic
+#     Value: !GetAtt TheStudioBounceTopic.Arn
+#     Export:
+#       Name: BounceTopicARN
+
+#   ComplainTopicARN:
+#     Description: ARN of the complaint topic
+#     Value: !GetAtt TheStudioComplaintTopic.Arn 
+#     Export:
+#       Name: !Sub "${self:provider.stage}-${self:service}-ComplainTopicARN"

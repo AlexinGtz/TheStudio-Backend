@@ -11,7 +11,6 @@ SES: { ses, aws }
 });
 
 export const sendMail = async (template: any) => {
-    // send mail with defined transport object
     const info = await transporter.sendMail(template);
 
     console.log("Email sent: %s", info.messageId);
