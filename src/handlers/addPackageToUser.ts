@@ -42,7 +42,7 @@ export const handler = async (event: any) => {
         userInfo.purchasedPackages.push({
             availableClasses: packageInfo.classQuantity,
             expireDate: expireDate.toISOString(),
-            totalClasses: packageInfo.classQuantity,
+            totalClasses: packageInfo.classQuantity / 2,
             purchasedDate: new Date().toISOString(),
             type: 'PILATES',
         });
@@ -50,7 +50,7 @@ export const handler = async (event: any) => {
         userInfo.purchasedPackages.push({
             availableClasses: packageInfo.classQuantity,
             expireDate: expireDate.toISOString(),
-            totalClasses: packageInfo.classQuantity,
+            totalClasses: packageInfo.classQuantity / 2,
             purchasedDate: new Date().toISOString(),
             type: 'WELLNESS',
         })
@@ -73,6 +73,7 @@ export const handler = async (event: any) => {
         user_id: userPhoneNumber,
         user_name: userInfo.firstName.trim() + " " + userInfo.lastName.trim(),
         price: packageInfo.cost,
+        class_quantity: packageInfo.classQuantity,
     }
     
     try {

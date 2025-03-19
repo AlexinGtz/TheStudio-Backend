@@ -679,5 +679,5 @@ functions:
       #       method: post
       #       cors: true
       events:
-        # - schedule: cron(0 19 * * 6)
-        - schedule: cron(*/3 * * * ? *)
+        - schedule: cron(0 18 ? * 7 *)
+        #- schedule: cron(*/3 * * * ? *)

@@ -48,11 +48,11 @@ export const handler = async () => {
         const classType = relatedPackage.classType === "COMBINED" ? "COMBINADO" : relatedPackage.classType;
 
         packageGroup.forEach((purchaseItem: any) => {
-            userRows += `<tr style='border: 1px solid #000; text-align: center;'><td style='border: 1px solid #000;'>${purchaseItem.user_name}</td><td style='border: 1px solid #000;'>${classType} ${relatedPackage.classQuantity} clases</td><td style='border: 1px solid #000;'>${new Date(purchaseItem.purchase_date).toLocaleDateString()}</td><td style='border: 1px solid #000;'>${formatCurrency(purchaseItem.price)}</td></tr>`;
+            userRows += `<tr style='border: 1px solid #000; text-align: center;'><td style='border: 1px solid #000;'>${purchaseItem.user_name}</td><td style='border: 1px solid #000;'>${classType} ${purchaseItem.class_quantity} clases</td><td style='border: 1px solid #000;'>${new Date(purchaseItem.purchase_date).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td><td style='border: 1px solid #000;'>${formatCurrency(purchaseItem.price)}</td></tr>`;
             individualTotals.totalPurchases += 1;
             individualTotals.totalIncome += purchaseItem.price;
         });
-        
+
         totalIndividualRows += `<tr style='border: 1px solid #000; text-align: center;'><td style='border: 1px solid #000;'>${classType}</td><td style='border: 1px solid #000;'>${relatedPackage.classQuantity}</td><td style='border: 1px solid #000;'>${formatCurrency(relatedPackage.cost)}</td><td style='border: 1px solid #000;'>${individualTotals.totalPurchases}</td><td style='border: 1px solid #000;'>${formatCurrency(individualTotals.totalIncome)}</td></tr>`;
         totals.totalPurchases += packageGroup.length;
         totals.totalIncome += relatedPackage.cost * packageGroup.length;
