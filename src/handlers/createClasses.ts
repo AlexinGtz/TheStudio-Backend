@@ -210,7 +210,7 @@ export const handler = async (event: any) => {
                 date_by_type: `${newDay.toISOString()}#WELLNESS`,
                 instructor: obj.teacher,
                 registeredUsers: [],
-                maxUsers: 10,
+                maxUsers: 9,
                 cancelled: false
             });
         }

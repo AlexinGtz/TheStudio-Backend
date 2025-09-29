@@ -23,8 +23,7 @@ export const handler = async (event: any) => {
         return responseHelper("Falta el tipo de clase en la llamada", undefined, HTTP_ERROR_CODES.NOT_FOUND);
     }
     const today = new Date();
-    const nextMonth = new Date();
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 2, 0);
 
     const classes = (await Promise.all([
         classesDB.query((today.getMonth() + 1).toString()),

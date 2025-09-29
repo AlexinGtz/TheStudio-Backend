@@ -17,10 +17,10 @@ export class CustomDynamoDB {
     }
 
     async getItem(primaryKeyValue, secondaryKeyValue?) {
-        const pk: any = marshall({[this.primaryKey]: primaryKeyValue});
+        const pk: any = marshall({ [this.primaryKey]: primaryKeyValue });
         let sk;
         if (secondaryKeyValue) {
-            sk = marshall({[this.sortingKey]: secondaryKeyValue})
+            sk = marshall({ [this.sortingKey]: secondaryKeyValue })
         }
 
         const options = new GetItemCommand({
@@ -32,7 +32,7 @@ export class CustomDynamoDB {
         })
 
         const dbRes = await this.DB.send(options);
-        if(!dbRes.Item) {
+        if (!dbRes.Item) {
             return null;
         }
         return unmarshall(dbRes.Item);
@@ -83,11 +83,11 @@ export class CustomDynamoDB {
         return this.DB.send(options);
     }
 
-    async scan(limit?: number, lastKey?: string) { 
+    async scan(limit?: number, lastKey?: string) {
         const options = new ScanCommand({
             TableName: this.tableName,
             Limit: limit ?? undefined,
-            ExclusiveStartKey: lastKey ? marshall({[this.primaryKey]: lastKey}) : undefined,
+            ExclusiveStartKey: lastKey ? marshall({ [this.primaryKey]: lastKey }) : undefined,
         });
 
         const dbRes = await this.DB.send(options)
@@ -106,7 +106,7 @@ export class CustomDynamoDB {
         for (let [k, v] of Object.entries(item)) {
             updateExp = `${updateExp} ${k} = :${k},`;
             expValues.push(marshall({ [`:${k}`]: v }));
-            
+
         }
 
         const ExpressionAttributeValues = {};
@@ -122,7 +122,7 @@ export class CustomDynamoDB {
             }
         }
 
-        if(this.sortingKey) {
+        if (this.sortingKey) {
             key[this.sortingKey] = {
                 S: sk
             }
@@ -144,9 +144,9 @@ export class CustomDynamoDB {
             RequestItems: {
                 [this.tableName]: {
                     Keys: idArray.map(el => {
-                        const key = {[this.primaryKey]: { S: el.pk }}
-                        if(this.sortingKey) {
-                            key[this.sortingKey]= { S: el.sk }
+                        const key = { [this.primaryKey]: { S: el.pk } }
+                        if (this.sortingKey) {
+                            key[this.sortingKey] = { S: el.sk }
                         }
 
                         return key;
@@ -159,14 +159,14 @@ export class CustomDynamoDB {
 
         return (dbRes.Responses[this.tableName].map(e => unmarshall(e)));
 
-    } 
+    }
 
     async batchWriteItems(items) {
         const batchSize = 25;
         const numberOfCalls = Math.ceil(items.length / batchSize);
         const callsToDB: any = []
 
-        for(let i = 0; i < numberOfCalls; i++) {
+        for (let i = 0; i < numberOfCalls; i++) {
             const currentItems = items.slice(i * batchSize, (i + 1) * batchSize);
             const options = new BatchWriteItemCommand({
                 RequestItems: {

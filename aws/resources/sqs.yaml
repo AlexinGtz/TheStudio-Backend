@@ -2,7 +2,7 @@ Resources:
   TheStudioBounceQueue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: TheStudioBounceQueue
+      QueueName: ${self:provider.stage}-TheStudioBounceQueue
       VisibilityTimeout: 30
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt TheStudioBounceQueueDLQ.Arn
@@ -11,13 +11,13 @@ Resources:
   TheStudioBounceQueueDLQ:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: TheStudioBounceQueueDLQ
+      QueueName: ${self:provider.stage}-TheStudioBounceQueueDLQ
       VisibilityTimeout: 30
 
   TheStudioComplaintQueue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: TheStudioComplaintQueue
+      QueueName: ${self:provider.stage}-TheStudioComplaintQueue
       VisibilityTimeout: 30
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt TheStudioComplaintQueueDLQ.Arn
@@ -26,7 +26,7 @@ Resources:
   TheStudioComplaintQueueDLQ:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: TheStudioComplaintQueueDLQ
+      QueueName: ${self:provider.stage}-TheStudioComplaintQueueDLQ
       VisibilityTimeout: 30
     
   TheStudioBounceQueuePolicy:

@@ -3,7 +3,6 @@ service: the-studio
 configValidationMode: error
 
 plugins: 
-  - serverless-esbuild
   - serverless-offline
   - serverless-dynamodb
   - serverless-s3-local
@@ -14,7 +13,7 @@ package:
   
 provider: 
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs22.x
   region: ${opt:region, "us-east-2"}
   stage: ${opt:stage, "local"}
   timeout: 30
@@ -98,7 +97,7 @@ custom:
     bundle: true
     minify: true
     exclude: ['aws-sdk']
-    target: node18
+    target: node22
     concurrency: 10
     watch:
       pattern: ['src/**/*.ts']

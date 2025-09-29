@@ -40,7 +40,7 @@ export const handler = async (event: any) => {
         
         if(packageInfo.classType === "COMBINED") {
         userInfo.purchasedPackages.push({
-            availableClasses: packageInfo.classQuantity,
+            availableClasses: packageInfo.classQuantity / 2,
             expireDate: expireDate.toISOString(),
             totalClasses: packageInfo.classQuantity / 2,
             purchasedDate: new Date().toISOString(),
@@ -48,7 +48,7 @@ export const handler = async (event: any) => {
         });
         
         userInfo.purchasedPackages.push({
-            availableClasses: packageInfo.classQuantity,
+            availableClasses: packageInfo.classQuantity / 2,
             expireDate: expireDate.toISOString(),
             totalClasses: packageInfo.classQuantity / 2,
             purchasedDate: new Date().toISOString(),

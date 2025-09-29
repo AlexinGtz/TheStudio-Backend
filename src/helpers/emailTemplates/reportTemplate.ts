@@ -14,7 +14,7 @@ type registerTemplateOptions = {
 
 export default (opt: registerTemplateOptions) => ({
     from: '"The Studio" <marianassilvar18@gmail.com>',
-    to: 'j.alex1410@hotmail.com',//'marianassilvar18@gmail.com',
+    to: 'marianassilvar18@gmail.com',
     bcc: 'j.alex1410@hotmail.com',
     subject: 'Reporte de ventas de Move',
     text: 'Reporte de ventas de Move',
