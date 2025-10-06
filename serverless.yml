@@ -16,7 +16,7 @@ provider:
   runtime: nodejs22.x
   region: ${opt:region, "us-east-2"}
   stage: ${opt:stage, "local"}
-  timeout: 30
+  timeout: 29
   environment:
     STAGE: ${self:provider.stage}
   iam:
@@ -41,6 +41,7 @@ provider:
         - Effect: Allow
           Action: 
             - ses:SendRawEmail
+            - ses:SendEmail
           Resource: '*'
         - Effect: Allow
           Action:
@@ -107,7 +108,7 @@ functions:
       name: ${self:custom.base}-login
       description: 'Logs a user into the app'
       handler: src/handlers/login.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -128,7 +129,7 @@ functions:
       name: ${self:custom.base}-registerUser
       description: 'Registers a new user'
       handler: src/handlers/registerUser.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -148,7 +149,7 @@ functions:
       name: ${self:custom.base}-bookClass
       description: 'Allows the user to book a class'
       handler: src/handlers/bookClass.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -170,7 +171,7 @@ functions:
       name: ${self:custom.base}-cancelClass
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/cancelClass.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -192,7 +193,7 @@ functions:
       name: ${self:custom.base}-getUserBookedClasses
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getUserBookedClasses.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -214,7 +215,7 @@ functions:
       name: ${self:custom.base}-getUpcomingClasses
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getUpcomingClasses.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -236,7 +237,7 @@ functions:
       name: ${self:custom.base}-createClasses
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/createClasses.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -257,7 +258,7 @@ functions:
       name: ${self:custom.base}-getProfile
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getProfile.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -278,7 +279,7 @@ functions:
       name: ${self:custom.base}-getAllPackages
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getAllPackages.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -299,7 +300,7 @@ functions:
       name: ${self:custom.base}-addPackageToUser
       description: 'Allows the user to book a class'
       handler: src/handlers/addPackageToUser.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -322,7 +323,7 @@ functions:
       name: ${self:custom.base}-getUsers
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getUsers.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -343,7 +344,7 @@ functions:
       name: ${self:custom.base}-getClassInfo
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getClassInfo.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -364,7 +365,7 @@ functions:
       name: ${self:custom.base}-getUserInfo
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getUserInfo.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -385,7 +386,7 @@ functions:
       name: ${self:custom.base}-getUserSecureMail
       description: 'Gets a secure mail for users to confirm'
       handler: src/handlers/getUserSecureMail.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -406,7 +407,7 @@ functions:
       name: ${self:custom.base}-confirmUserMail
       description: 'Confirms the user mail'
       handler: src/handlers/confirmUserMail.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -427,7 +428,7 @@ functions:
       name: ${self:custom.base}-getUserClasses
       description: 'Allows the user and admin to cancel a class'
       handler: src/handlers/getUserClasses.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -448,7 +449,7 @@ functions:
       name: ${self:custom.base}-editUserData
       description: 'Allows the user to book a class'
       handler: src/handlers/editUserData.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -469,7 +470,7 @@ functions:
       name: ${self:custom.base}-updateUserPassword
       description: 'Allows the user to book a class'
       handler: src/handlers/updateUserPassword.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -490,7 +491,7 @@ functions:
       name: ${self:custom.base}-deleteUser
       description: 'Allows the user to book a class'
       handler: src/handlers/deleteUser.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -511,7 +512,7 @@ functions:
       name: ${self:custom.base}-editPackageInfo
       description: 'Allows the user to book a class'
       handler: src/handlers/editPackageInfo.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -532,7 +533,7 @@ functions:
       name: ${self:custom.base}-ignoreMail
       description: 'Allows the user to book a class'
       handler: src/handlers/ignoreMail.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -554,7 +555,7 @@ functions:
       name: ${self:custom.base}-sendVerificationCode
       description: 'Allows the user to book a class'
       handler: src/handlers/sendVerificationCode.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -576,7 +577,7 @@ functions:
       name: ${self:custom.base}-verifyCode
       description: 'Allows the user to book a class'
       handler: src/handlers/verifyCode.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -597,7 +598,7 @@ functions:
       name: ${self:custom.base}-forgotPassword
       description: 'Allows the user to book a class'
       handler: src/handlers/forgotPassword.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -618,7 +619,7 @@ functions:
       name: ${self:custom.base}-removeTrialClass
       description: 'Allows admin to remove a class'
       handler: src/handlers/removeTrialClass.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -639,7 +640,7 @@ functions:
       name: ${self:custom.base}-processBouncesAndComplains
       description: 'Processes bounces and complains'
       handler: src/handlers/processBouncesAndComplains.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:
@@ -660,7 +661,7 @@ functions:
       name: ${self:custom.base}-sendReports
       description: 'Sends reports'
       handler: src/handlers/sendReports.handler
-      timeout: 30
+      timeout: 29
       memorySize: 264
       package:
         patterns:

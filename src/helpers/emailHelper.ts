@@ -1,13 +1,12 @@
 import * as nodemailer from "nodemailer";
-import * as aws from '@aws-sdk/client-ses'
+import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2'
 
-const ses = new aws.SES({
-    apiVersion: "2010-12-01",
+const sesClient = new SESv2Client({
     region: 'us-east-2',
 });
   
 const transporter = nodemailer.createTransport({
-SES: { ses, aws }
+    SES: { sesClient, SendEmailCommand }
 });
 
 export const sendMail = async (template: any) => {
