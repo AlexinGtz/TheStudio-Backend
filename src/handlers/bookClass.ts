@@ -81,6 +81,10 @@ export const handler = async (event: any) => {
         if(!selectedPackage || selectedPackage.availableClasses <= 0) {
             return;
         }
+
+        if(selectedPackage.expireDate > today.toISOString()) {
+            return;
+        }
     
         classInfo.registeredUsers.push({
             phoneNumber: u.phoneNumber,
