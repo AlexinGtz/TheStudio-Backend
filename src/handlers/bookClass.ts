@@ -18,6 +18,7 @@ export const handler = async (event: any) => {
     const today = new Date();
     const classDateString = classDateByType.split('#')[0]
     const classDateObj = new Date(classDateString);
+    const isBulkBooking = users.length > 1;
 
     if(!classDateByType || !classMonth) {
         return responseHelper("No se mandó la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
@@ -82,7 +83,9 @@ export const handler = async (event: any) => {
             return;
         }
 
-        if(selectedPackage.expireDate > today.toISOString()) {
+        const classDate = new Date(classInfo.date_by_type.split('#')[0]);
+        const packageExpireDate = new Date(selectedPackage.expireDate);
+        if(packageExpireDate < classDate) {
             return;
         }
     
@@ -103,7 +106,10 @@ export const handler = async (event: any) => {
     });
 
     if(updatedUsersCount === 0) {
-        return responseHelper("No se reservó para ningún usuario, clase ya agendada o no tienen clases a favor", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        if(isBulkBooking) {
+            return responseHelper("No se reservó para ningún usuario, clase ya agendada o no tienen clases a favor", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
+        }
+        return responseHelper("No se pudo reservar la clase. Revisa que tengas un paquete activo con clases disponibles y que no venza antes de la fecha de la clase.", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
     }
 
     await Promise.all([

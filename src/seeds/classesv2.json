@@ -1,47 +1,47 @@
 [
     {
-        "month": "12",
-        "date_by_type": "2024-12-20T20:00:00.000Z#PILATES",
+        "month": "5",
+        "date_by_type": "2026-05-20T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
         "registeredUsers": []
     },
     {
-        "month": "12",
-        "date_by_type": "2024-12-21T20:00:00.000Z#PILATES",
+        "month": "5",
+        "date_by_type": "2026-05-21T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
         "registeredUsers": []
     },
     {
-        "month": "12",
-        "date_by_type": "2024-12-20T19:00:00.000Z#PILATES",
+        "month": "5",
+        "date_by_type": "2026-05-22T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
         "registeredUsers": []
     },
     {
-        "month": "1",
-        "date_by_type": "2025-01-15T19:00:00.000Z#WELLNESS",
+        "month": "5",
+        "date_by_type": "2026-05-23T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 10,
         "registeredUsers": []
     },
     {
-        "month": "1",
-        "date_by_type": "2025-01-15T19:00:00.000Z#PILATES",
+        "month": "5",
+        "date_by_type": "2026-05-24T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
         "registeredUsers": []
     },
     {
-        "month": "12",
-        "date_by_type": "2025-12-15T19:00:00.000Z#PILATES",
+        "month": "5",
+        "date_by_type": "2026-05-25T20:00:00.000Z#PILATES",
         "cancelled": false,
         "instructor": "",
         "maxUsers": 6,
