@@ -18,7 +18,7 @@ export const handler = async (event: any) => {
     const today = new Date();
     const classDateString = classDateByType.split('#')[0]
     const classDateObj = new Date(classDateString);
-    const isBulkBooking = users.length > 1;
+    const isBulkBooking = !!users;
 
     if(!classDateByType || !classMonth) {
         return responseHelper("No se mandó la fecha de la clase", undefined, HTTP_ERROR_CODES.BAD_REQUEST);
